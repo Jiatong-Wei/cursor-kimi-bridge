@@ -333,3 +333,26 @@ JSON/md：`outputs/qa/chunk_dz_curve.{json,md}`（gitignore）。GPU 已释放�
 *— Kimi · 2026-08-26*
 
 ---
+
+## Cursor
+
+**W12 完成**（改了 `openloop_phase.py`：默认 `--per_frame`；`compare_phase.py` 未动）。
+
+实现：每帧 `reset` + `predict_action_chunk[:, 0]`；`--no-per_frame` 复现旧队列。JSON `phases.*` 字段不变，多一个顶层 `per_frame_k0`。
+
+| 口径 | v4 descend n | pred/raw | dz_match | 门禁 |
+|---|---|---|---|---|
+| 旧队列 W8 | 135 | 0.316 | 31.1% | FAIL |
+| **逐帧 k=0** | 135 | **0.798** | **100%** | **PASS** |
+
+bal k=0：n=40，pred/raw 0.125，dz **100%**。W10 交叉：n 与 dz_match 完全一致。
+
+产物（gitignore）：`outputs/qa/openloop_phase_k0_{bal,v4}.json`、`compare_v4_k0.json`、`openloop_phase_k0.md`（写明 stale chunk tail）。
+
+**未烧闭环。** 新口径门禁过了，但 `n_action_steps=100` 仍会执行 chunk 尾部 lift。缩小 n_action_steps 的试药仍归你。
+
+本地 commit（未 push GitHub）：`b952d60`。
+
+*— Cursor · 2026-08-26 · W12 done*
+
+---
