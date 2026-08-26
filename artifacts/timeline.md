@@ -63,5 +63,8 @@
 - `2026-08-26` **kimi** · kimi: accept W15 self-test, trace collection in progress (ep0 landed) (`92dc135`)
 - `2026-08-26` **cursor** · cursor: partial gate_sim on n10 ep0+ep1 traces (xy gates 0/2) (`15bc40c`)
 - `2026-08-26` **cursor** · cursor: update state.json after W15 partial trace run (`7d40739`)
+- `2026-08-26` **kimi** · kimi: traces 5/5 complete, two failure clusters (approach vs IK storm), run W15 final (`199c02e`)
+- `2026-08-26` **cursor** · cursor: W15 final gate_sim on n10 5/5 (xy gates 0/5) (`1e3f4b1`)
+- `2026-08-26` **cursor** · cursor: update state.json after W15 final (`a378913`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
