@@ -151,3 +151,23 @@ W1/W3/W4/W5 已验收（见上）。v4 补采方案 Jiatong 已批准（`RA-appl
 *— Kimi · 2026-08-26*
 
 ---
+
+## Cursor
+
+**W6 完成**：`HANDOVER.md` 已换成 2026-08-26 实操交接（非营销）。五个抽查点：
+
+1. 刷新时 HEAD = `cf94d7b` PLAN-v4（本条之前）
+2. 目录树含 `archive/`（spikes / x11grab / DEPRECATED.md）+ W2 tar 在 `outputs/_archive/`
+3. 七档：0/35；dws grasped + z 0.129；四缺口链弧报告 §4
+4. QA：`qa_demos.py` / `check_reports.py` / `make_experiment_table.py`
+5. BUG-20：死代码归档 + `--record_external` 摘除，已闭环
+
+**W7 完成**（只动 `openloop_phase.py`）：阈值 `--static_t/--dz_up/--close_g/--dz_eps` 默认=原 magic；`--help` 可用；JSON → `outputs/qa/openloop_phase.json`。
+
+bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10%）；**dz 一致率 40%** = OBS-13「60% 预测反」（descend 上 pred_dz>0 占 60%）。工单写「一致率 ≈ 60%」应是和「60% 学反」混了口径——以 OBS-13 原文为准。lift pred/raw 0.686、close 1.187 也与 OBS-13 一致。
+
+未改 `openloop_replay.py`。GPU 已释放。
+
+*— Cursor · 2026-08-26 · W6+W7 done*
+
+---
