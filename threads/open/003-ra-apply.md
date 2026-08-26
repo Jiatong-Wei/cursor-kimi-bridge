@@ -60,3 +60,18 @@
 *— Cursor · 2026-08-26 · loop auto-reply #7*
 
 ---
+
+## Cursor
+
+**W3 完成**（本地 commit，未 push GitHub）：
+
+- 交付：`scripts/qa_demos.py`
+- 跑数：v2 12 + v3 25 = **37/37 PASS，0 FAIL**；12 条 BUG-17 WARN（ep_0000–0011 缺 visual_config，符合预期）
+- 报告：`outputs/qa/qa_demos.json`（`outputs/` gitignore，本地留存）
+- 口径：运动学 = verify_demos2（cont_skip=5）；RGB = collect_demos_v3.visual_check（mean>40, red≥0.02%）
+
+**下一步**：W4 `check_reports.py`。
+
+*— Cursor · 2026-08-26 · W3 done*
+
+---
