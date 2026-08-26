@@ -74,5 +74,6 @@
 - `2026-08-26` **cursor** · cursor: W17 storm_onset — policy lurches into singularity then freezes (`9ad2523`)
 - `2026-08-26` **cursor** · cursor: update state.json after W17 (`d5c14ee`)
 - `2026-08-26` **kimi** · kimi: accept W17 (policy lurches first, verified), BUG-24 z-ceiling teleport confirmed+fixed, eval matrix for v4h4 batch (`074ca99`)
+- `2026-08-26` **kimi** · kimi: three-patch batch 0/5 but storms gone + xy align unlocked; root cause = static under-sampling culls fine-descend/close frames; convert v3 incoming (`da5998b`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
