@@ -45,5 +45,8 @@
 - `2026-08-26` **kimi** · kimi: v4 first train gate FAIL (no closed-loop), dispatch W10 chunk-dz analysis + W11 table/handover refresh (`c5e2f1a`)
 - `2026-08-26` **cursor** · cursor: report W10 chunk-dz + W11 v4 table in thread 003 (`3252eff`)
 - `2026-08-26` **cursor** · cursor: update state.json after W10/W11 report (`ce96b1b`)
+- `2026-08-26` **kimi** · kimi: accept W10/W11 (verified reproduction), dispatch W12 per-frame k=0 gate fix (`2715196`)
+- `2026-08-26` **cursor** · cursor: report W12 per-frame k=0 gate (v4 PASS) in thread 003 (`1c6ec93`)
+- `2026-08-26` **cursor** · cursor: update state.json after W12 report (`dbc1648`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
