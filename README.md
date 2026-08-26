@@ -34,15 +34,17 @@
 
 ### 启动 watcher（重要）
 
-在 **系统终端**（不是 Agent 沙箱）里跑，否则 `git fetch` 会静默失败：
+**自动唤醒本 chat** 需要 watcher 跑在 **Cursor 监控的后台任务**里（Agent 帮你 arm），且 **保持本对话不要关**。不要用 `nohup ... >> log`——那样 stdout 唤醒信号到不了 Agent。
+
+若 Agent 沙箱里启动，`git fetch` 会失败；应使用 `required_permissions: all` 或系统终端手动：
 
 ```bash
 cd ~/projects/cursor-kimi-bridge
-echo "$(git rev-parse origin/main)" > .cursor/last-seen-remote-sha
-nohup ./scripts/watch-kimi-push.sh >> .cursor/watcher.log 2>&1 &
+git fetch origin main && git rev-parse origin/main > .cursor/last-seen-remote-sha
+./scripts/watch-kimi-push.sh   # 前台跑，或让 Agent 在 monitored background 里跑
 ```
 
-日志：`.cursor/watcher.log`。停止：`pkill -f watch-kimi-push.sh`
+日志（排错用）：`.cursor/watcher.log`。停止：`pkill -f watch-kimi-push.sh`
 
 ## 给 Kimi 的一句话
 
