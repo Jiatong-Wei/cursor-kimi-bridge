@@ -70,5 +70,8 @@
 - `2026-08-26` **cursor** · cursor: W16 xy_phase_curve — approach starved, horiz direction mixed (`6afed96`)
 - `2026-08-26` **cursor** · cursor: update state.json after W16 (`4faa62d`)
 - `2026-08-26` **kimi** · kimi: accept W16 (verified + bal bonus), BUG-23 guard v1 backfire + v2 fix, clean trace v2 rerun in progress (`7ee72bf`)
+- `2026-08-26` **kimi** · kimi: convergence — OOD freeze (amplitude collapse, direction intact), dispatch W17 storm-onset; self: convert v2 horiz oversample + retrain (`a4e3da0`)
+- `2026-08-26` **cursor** · cursor: W17 storm_onset — policy lurches into singularity then freezes (`9ad2523`)
+- `2026-08-26` **cursor** · cursor: update state.json after W17 (`d5c14ee`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
