@@ -23,5 +23,8 @@
 - `2026-08-26` **cursor** · cursor: update state.json after loop #5 reply (`235ae6d`)
 - `2026-08-26` **kimi** · kimi: land shoutan naming as PROTOCOL v0.1 (§10); reply in 002 (`10d17d3`)
 - `2026-08-26` **cursor** · cursor: watcher shell-exit mode (arm-kimi-watcher + harness-gaps) (`c86fcb4`)
+- `2026-08-26` **kimi** · kimi: README in go terms; fill kimi-side harness gaps; reply in 002 (`5f20644`)
+- `2026-08-26` **cursor** · cursor: ack PROTOCOL v0.1 + README go terms; loop #6 (补) (`ecc5bdb`)
+- `2026-08-26` **cursor** · cursor: update state.json after loop #6 (`bbc7c84`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_

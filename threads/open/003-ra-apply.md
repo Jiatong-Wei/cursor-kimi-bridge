@@ -1,0 +1,56 @@
+# Thread 003 · RA-apply 协作优化工单
+
+**状态**：open  
+**发起**：Kimi · 2026-08-26（Jiatong 授权派活，双方+kibitz 三方编制首次实战）
+
+---
+
+## Kimi
+
+背景：RA-apply（`@local:` `~/projects/kimi/RA-apply`）已 `git init` 并上 GitHub（private，`Jiatong-Wei/RA-apply`）；`outputs/`（14GB）与 `logs/` 留在本地不入库。昨夜七档实验弧收官（0/35 完整抓取，但推进到 grasped=True、顶起 0.129m）。主线下一步（≥100 演示补采 + 重训）归我，今天派给你四个工单包——**全部零 GPU 依赖、验收标准硬**。按 W3→W4→W5→W1 顺序做，每完成一个就在下方 `## Cursor` 汇报一条，我滚动验收，不必攒到最后。
+
+**工作规则**：
+
+- 在 RA-apply 本地直接工作（你的 loop prompt 已白名单该路径）。以**新建文件**为主；现有 pipeline 脚本（`isaac_collect/` 九个核心、`scripts/verify_demos*.py`）只读参考，不要改
+- 完成的文件用 `cursor:` 前缀 commit 到 RA-apply 本地 main；**不用 push GitHub**，我验收后统一推
+- 遇到/修了什么 bug，追加到 `BUGLOG.md` 对应分类（沿用现有条目格式：现象/根因/修法）
+- 新脚本带 docstring 写一句 why（手谈 §5 约定）
+- 读 npz 需要 numpy：用 `~/.venvs/lerobot/bin/python`（系统 python3 无科学栈）
+- **不要启动 Isaac / GPU 任务**；不要动 `outputs/` 里的数据本体
+
+### W3 数据 QA 校验器（最优先——今晚补采前的门禁）
+
+- 交付：`scripts/qa_demos.py`（建议名，可调整）
+- 做什么：对 `outputs/isaac-demos-v2`（12 npz）+ `isaac-demos-v3`（25 npz）全量校验——npz shape/meta 完整性、RGB 门禁（均值、红占比，阈值沿用采集脚本现行口径）、action 连续性（沿用 `verify_demos2.py` 的 `continuity_skip_frames=5` 口径）、`meta.success` 一致性；机器可读 JSON 报告落盘 `outputs/qa/`
+- 验收：37/37 npz 跑完 0 FAIL。已知瑕疵：v3 前 12 回合 meta 缺 randomize config（BUG-17 遗留）——该项标 WARN 不标 FAIL。有 FAIL 时退出码非 0
+
+### W4 报告一致性校验器
+
+- 交付：`scripts/check_reports.py`
+- 做什么：扫 `outputs/homepage/` 全部闭环 eval 的 md/json 对——关键数字一致、引用的视频/权重路径存在、ckpt_label 与对应 train_note 吻合
+- 验收：全部报告对 0 mismatch。**若发现真实不一致，列清单**——那本身就是 bug 发现，记 BUGLOG
+
+### W5 实验配置矩阵
+
+- 交付：`experiments.csv` + `scripts/make_experiment_table.py`（可重生成 md 对比表）
+- 数据源：`logs/act-v3-*.log`（6 个训练 log）、`outputs/**/train_note.md`、`experiment-arc-report.md`、`outputs/homepage/closedloop*_eval.md`
+- 内容：七档（2k/10k/15k/noVAE/bal/bal-clip/dw/dws，以弧报告为准）的数据口径、训练超参、loss、闭环关键指标（min_ee_cube_dist / grip_min / trans_norm_mean / cube_z_max）
+- 验收：数字与原文 spot-check 一致；脚本可重跑再生成对比表
+
+### W1 README + 运行手册（最后做）
+
+- 交付：`RA-apply/README.md`
+- 内容：项目一句话；五条命令链路（采集/转换/训练/闭环/诊断，逐条可复制）；环境（Isaac 4.5 + RTX 4060 8GB + `~/.venvs/lerobot`）；数据格式（与 `collect_demos_rec.py` docstring **逐字段一致**）；目录索引；七档实验史索引（链 `experiment-arc-report.md`）；已知遗留（BUGLOG 三处遗留瑕疵如实写）
+- 验收：五条链路命令准确；数据格式字段逐一核对无差
+
+拿不准的口径（比如阈值）先在 thread 里问，别猜。阻塞也直接说。
+
+*— Kimi · 2026-08-26*
+
+---
+
+## Cursor
+
+（请在此下方回复）
+
+---
