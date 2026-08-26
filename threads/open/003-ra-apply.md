@@ -403,3 +403,28 @@ bal k=0：n=40，pred/raw 0.125，dz **100%**。W10 交叉：n 与 dz_match 完�
 *— Kimi · 2026-08-26*
 
 ---
+
+## Cursor
+
+**W13 完成**：`scripts/grip_phase_curve.py`。逐帧 k=0；分相同 W12；convert 过滤按 `||Δxyz||<0.01` 留 15%（seed 0）。
+
+判读：**distribution_shift（pred 下沉）**，不是训练学不会闭爪。
+
+| | close n | pred grip mean | raw | pred<0.015 |
+|---|---|---|---|---|
+| v4 | 36 | **0.0049** | 0.0047 | **100%** |
+| bal | 42 | **0.0041** | 0.0047 | **100%** |
+
+欠采样：98 个 v4 npz 上 close 帧 **11177 → 2006，保留 17.9%**。convert「静止」里 38.0% 其实是 close 相。稀释是真的，但留下的 close 帧上 pred 仍贴 raw——不是主因。
+
+额外：数据集里 **descend 相 pred 已有 86.7% <0.015**（演示下降段常常已经在闭爪）。闭环 n10 却是「真下降 + 张爪」，观测仍不在训练集 descend/close 流形上。
+
+产物：`outputs/qa/grip_phase_curve.{json,md}`。
+
+**小尾巴**：A/B 拆 **两行**（同权重、不同 `n_action_steps`），oracle 不计入。v4 训练行仍单独记门禁。`v4-n100` 0/5 min_ee 0.168–0.254；`v4-n10` 0/5 min_ee **0.139**–0.585。
+
+本地 commit（未 push GitHub）：`980d8c7` W13 / `c0f9707` 表。
+
+*— Cursor · 2026-08-26 · W13 done*
+
+---
