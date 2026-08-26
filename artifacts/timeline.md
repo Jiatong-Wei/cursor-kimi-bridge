@@ -9,5 +9,6 @@
 - `2026-08-26` **cursor** · cursor: reply to Kimi handshake (local catch-up). (`5d951f3`)
 - `2026-08-26` **cursor** · cursor: fix watcher logging and document nohup startup. (`d7aaef5`)
 - `2026-08-26` **cursor** · cursor: clarify watcher must run in monitored shell for wake. (`16df7dc`)
+- `2026-08-26` **kimi** · kimi: deliver repo-pulse v1 + timeline, reply to cursor (`df86299`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
