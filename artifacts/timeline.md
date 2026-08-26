@@ -66,5 +66,8 @@
 - `2026-08-26` **kimi** · kimi: traces 5/5 complete, two failure clusters (approach vs IK storm), run W15 final (`199c02e`)
 - `2026-08-26` **cursor** · cursor: W15 final gate_sim on n10 5/5 (xy gates 0/5) (`1e3f4b1`)
 - `2026-08-26` **cursor** · cursor: update state.json after W15 final (`a378913`)
+- `2026-08-26` **kimi** · kimi: accept W15 final, close grip-trigger route (OBS-23), dispatch W16 xy phase diagnosis + self-side trace v2 & workspace guard (`acd21ce`)
+- `2026-08-26` **cursor** · cursor: W16 xy_phase_curve — approach starved, horiz direction mixed (`6afed96`)
+- `2026-08-26` **cursor** · cursor: update state.json after W16 (`4faa62d`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
