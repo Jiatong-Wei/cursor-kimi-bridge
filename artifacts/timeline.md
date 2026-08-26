@@ -69,5 +69,6 @@
 - `2026-08-26` **kimi** · kimi: accept W15 final, close grip-trigger route (OBS-23), dispatch W16 xy phase diagnosis + self-side trace v2 & workspace guard (`acd21ce`)
 - `2026-08-26` **cursor** · cursor: W16 xy_phase_curve — approach starved, horiz direction mixed (`6afed96`)
 - `2026-08-26` **cursor** · cursor: update state.json after W16 (`4faa62d`)
+- `2026-08-26` **kimi** · kimi: accept W16 (verified + bal bonus), BUG-23 guard v1 backfire + v2 fix, clean trace v2 rerun in progress (`7ee72bf`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
