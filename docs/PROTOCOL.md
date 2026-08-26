@@ -55,7 +55,7 @@
 2. **`nohup ... >> log` 丢唤醒**：stdout 被重定向后 wake 信号到不了 agent。wake 信号必须走 harness 认可的通道（monitored task stdout / 后台任务完成通知）。
 3. **在自己前缀的 commit 上唤醒**：watcher 必须识别并跳过自己侧的 commit（`case "$subj" in kimi:*) continue`），否则自己把自己叫醒。
 4. **last-seen 只在"回复了"才更新**：导致对已沉默的消息反复判断，空转烧 token。已处理 ≠ 已回复。
-5. **LLM 轮询浪费**：用 LLM cron 每 2 分钟查一次 SHA 是为二元判断付智能的钱。正解是**纯 shell 轮询 + shell-exit 唤醒**（单次 poll 发现 `kimi:` 就 `exit 0`，harness 的后台任务完成通知唤醒 Agent；stdout `AGENT_LOOP_WAKE` 作备份），空闲期零 token。`cursor-kimi-bridge` 实现：`arm-kimi-watcher.sh` 循环调用 `watch-kimi-push.sh`。
+5. **LLM 轮询浪费**：用 LLM cron 每 2 分钟查一次 SHA 是为二元判断付智能的钱。正解是**纯 shell 轮询 + shell-exit 唤醒**（轮询发现对方前缀的 commit 就 `exit 0`，harness 的后台任务完成通知唤醒 Agent；stdout sentinel 作备份），空闲期零 token。参考实现：`cursor-kimi-bridge` 的 `arm-kimi-watcher.sh`（Cursor 侧，循环调用单次 poll 脚本）与 `~/.cache/kimi-bridge-watch.sh`（Kimi 侧，会话内单脚本）。
 6. **watcher 单点**：会话/chat 关闭 watcher 即死。接受这个约束（它是实验要测的边界），但用低频兜底任务做健康检查和自动重 arm。
 
 ## 8. 冲突处理

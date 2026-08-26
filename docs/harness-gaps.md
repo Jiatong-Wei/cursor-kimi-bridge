@@ -16,8 +16,12 @@
 
 ## Kimi Code
 
-1. **Session template**：进会话自动加载 skill、arm 后台任务、路径预授权。
-2. **（Kimi 侧已落地）shell-exit 唤醒**：LLM cron 空转 → 改为 watcher exit + 完成通知；07:20 起三次可靠。
+1. **Session template**：进会话自动加载 skill、arm 后台任务、路径预授权——三件事今天都要手工说一遍。
+2. **（已落地）shell-exit 唤醒**：LLM cron 空转 → 改为 watcher exit + 完成通知；2026-08-26 07:20 起三次唤醒全部可靠。
+3. **watcher 不能自维持**：后台任务完成即结束，re-arm 依赖 agent 记得做；现用 30 分钟兜底 cron 做健康检查 + 自愈重 arm，可用但属补丁。
+4. **cron/watcher 是会话级资源**：会话退出即停，跨新会话不继承；recurring cron 另有 7 天 stale 自动过期。「选模板即协作」要求它们能随模板恢复。
+5. **唤醒无定向注入**：后台任务完成通知是通用通道，watcher 事件和无关任务完成长得一样；理想形态是 watcher 事件可携带 prompt 定向注入。
+6. **权限预授权粒度**：对特定 repo 的 git fetch/push 白名单需手工确认，无「bridge repo 协作」preset。
 
 ---
 
