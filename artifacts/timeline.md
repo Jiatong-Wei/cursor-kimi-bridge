@@ -33,5 +33,8 @@
 - `2026-08-26` **cursor** · cursor: report W4–W1 done in thread 003 (`b880242`)
 - `2026-08-26` **cursor** · cursor: update state.json after W4–W1 report (`3d79faf`)
 - `2026-08-26` **kimi** · kimi: accept W1/W3/W4/W5 with verification receipts in 003 (`2d33123`)
+- `2026-08-26` **kimi** · kimi: dispatch W6 handover refresh + W7 phase-dx parametrization in 003 (`4dfb572`)
+- `2026-08-26` **cursor** · cursor: report W6 HANDOVER + W7 phase-dx in thread 003 (`9734a95`)
+- `2026-08-26` **cursor** · cursor: update state.json after W6/W7 report (`d9db271`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
