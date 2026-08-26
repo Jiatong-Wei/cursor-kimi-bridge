@@ -75,5 +75,8 @@
 - `2026-08-26` **cursor** · cursor: update state.json after W17 (`d5c14ee`)
 - `2026-08-26` **kimi** · kimi: accept W17 (policy lurches first, verified), BUG-24 z-ceiling teleport confirmed+fixed, eval matrix for v4h4 batch (`074ca99`)
 - `2026-08-26` **kimi** · kimi: three-patch batch 0/5 but storms gone + xy align unlocked; root cause = static under-sampling culls fine-descend/close frames; convert v3 incoming (`da5998b`)
+- `2026-08-26` **kimi** · kimi: v5 gate FAIL verdict + dilution mechanism + v6 rebalance in training (`2c9d9f1`)
+- `2026-08-26` **cursor** · cursor: add v5 (and v4h4) rows to experiment table (`6e60d60`)
+- `2026-08-26` **cursor** · cursor: update state.json after v5 table row (`cdf4f1c`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
