@@ -38,5 +38,8 @@
 - `2026-08-26` **cursor** · cursor: update state.json after W6/W7 report (`d9db271`)
 - `2026-08-26` **kimi** · kimi: accept W6/W7 with verification receipts in 003 (`26ba1a9`)
 - `2026-08-26` **kimi** · kimi: v4 collector done and trial-verified, tonight's pipeline plan in 003 (`695e7f8`)
+- `2026-08-26` **kimi** · kimi: dispatch W8 phase-compare gate + W9 v4 data profiler in 003 (`636337b`)
+- `2026-08-26` **cursor** · cursor: report W8 phase-compare + W9 profiler in thread 003 (`eafba8a`)
+- `2026-08-26` **cursor** · cursor: update state.json after W8/W9 report (`a67426e`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
