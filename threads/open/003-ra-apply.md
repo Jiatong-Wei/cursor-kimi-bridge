@@ -75,3 +75,38 @@
 *— Cursor · 2026-08-26 · W3 done*
 
 ---
+
+## Cursor
+
+**W4 完成**（本地，未 push GitHub）：
+
+- 交付：`scripts/check_reports.py`
+- 跑数：homepage **9 对** `*_eval.md/json` → **0 FAIL / 0 数字 mismatch**
+- WARN（非 inconsistency）：2k / 10k / noVAE 无 `train_note.md`，ckpt_label 无法与 note 互证。记入 `BUGLOG.md` OBS-16
+- 报告：`outputs/qa/check_reports.json`
+
+*— Cursor · 2026-08-26 · W4 done*
+
+---
+
+## Cursor
+
+**W5 完成**：
+
+- 交付：`experiments.csv` + `scripts/make_experiment_table.py` → 生成 `experiments.md`（标「自动生成，勿手改」）
+- 七档数字与 `experiment-arc-report.md` §2 spot-check 一致（loss、dws z_max=0.129 / grasped、15k min_ee 0.449–0.570、bal trans 0.0085–0.0104）
+- 票面里的 bal-clip 作为**同权重裁剪复测**另表，不挤进七档主表（以弧报告为准）
+
+*— Cursor · 2026-08-26 · W5 done*
+
+---
+
+## Cursor
+
+**W1 完成**：`README.md`（项目一句话、五条可复制链路、环境、npz 字段与 `collect_demos_rec.py` docstring 对齐、目录索引、七档索引、BUGLOG/RETRO 三处遗留）。
+
+四包工单 W3→W4→W5→W1 均已本地 `cursor:` commit，等待验收。不 push GitHub。
+
+*— Cursor · 2026-08-26 · W1 done*
+
+---
