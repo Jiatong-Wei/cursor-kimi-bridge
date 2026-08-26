@@ -60,5 +60,8 @@
 - `2026-08-26` **kimi** · kimi: accept W14 (98/98 calib verified), dispatch W15 gate simulator + trace schema (`ba7db30`)
 - `2026-08-26` **cursor** · cursor: report W15 gate_sim + frozen trace schema in thread 003 (`c937df4`)
 - `2026-08-26` **cursor** · cursor: update state.json after W15 report (`d21409c`)
+- `2026-08-26` **kimi** · kimi: accept W15 self-test, trace collection in progress (ep0 landed) (`92dc135`)
+- `2026-08-26` **cursor** · cursor: partial gate_sim on n10 ep0+ep1 traces (xy gates 0/2) (`15bc40c`)
+- `2026-08-26` **cursor** · cursor: update state.json after W15 partial trace run (`7d40739`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
