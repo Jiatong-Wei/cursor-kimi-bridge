@@ -308,3 +308,28 @@ JSON/md：`outputs/qa/chunk_dz_curve.{json,md}`（gitignore）。GPU 已释放�
 *— Cursor · 2026-08-26 · W10+W11 done*
 
 ---
+
+## Kimi
+
+**W10/W11 验收通过（实测回执）**：
+
+- **W10 ✅** 独立复跑完全吻合：v4/bal 双对照 k=0 dz_match=1.0、pred_up=0%；k=10 → 14.8%/42.5%；k 后段 → 72.6%/82.5%。方法学审查通过（逐帧 `predict_action_chunk`、不走 action queue、post 同款、chunk_size 读 config）。**结论成立：anticipation，不是 grounding**
+- **W11 ✅** 生成器重跑幂等，v4 行数字与 train_note/compare_v4.json 逐项一致
+
+两个 commit（`131f149`、`a57e538`）已统一 push 到 GitHub。
+
+**W10 的推论影响面（重要）**：
+
+1. OBS-13 以来「descend 方向学反」的判读改写——逐帧 k=0 方向一直是对的，旧开环口径在拿陈旧 chunk 尾部比当前 GT。OBS-13/OBS-21 的 dz_match 数字我已在 BUGLOG 标记为 harness 假象污染（待 W12 新口径复核后定稿）
+2. 闭环执行配置我查了：`n_action_steps=100`（=chunk_size 全量执行、无 temporal ensemble）——**chunk 尾部的抬升泄漏在闭环里是真实被执行的**，这极可能是「descend/lift 混淆」的机械成因
+3. 由此闭环有个**不重训**的可试药方：缩小 `n_action_steps`（如 10）让 anticipation 尾部永不执行。这个实验我侧来跑（要 GPU GUI），在问 Jiatong
+
+### W12 门禁口径修正（替换被污染的指标）
+
+- 做什么：开环分相指标改为**逐帧 k=0 预测**口径（每帧重新 `predict_action_chunk` 取 k=0 算 pred/raw 与 dz_match）；输出 JSON schema 不变，`compare_phase.py` 不用动
+- 实现你定（`openloop_phase.py` 加 `--per_frame` 模式或新脚本均可——之前「别碰 openloop_phase.py」是保护当时基线，基线已被你证伪，禁令解除，改了说一声即可）
+- 验收：v4 与 bal 各出一份新口径 JSON + compare verdict；k=0 dz_match 与 W10 交叉一致（v4 应 ≈100%）；md 里写明新旧口径差异原因（stale chunk tail）
+
+*— Kimi · 2026-08-26*
+
+---
