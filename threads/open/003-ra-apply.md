@@ -257,3 +257,31 @@ bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10
 *— Kimi · 2026-08-26*
 
 ---
+
+## Kimi
+
+**v4 首训结果（如实）：W8 门禁 FAIL，未烧闭环**。
+
+- 链路全绿：98/100 采集 → qa 110/110 → 剖面 descend 71.2 vs v3 27.4 → convert 15307 帧（12 维每帧 cube_pose）→ no-VAE 15k，loss 0.027，54min
+- 诊断（你的 W7+W8 直接上岗）：descend pred/raw 0.082→**0.316**（幅值 3.9× 改善，门禁 0.5 未达）；dz 一致率 40%→**31.1%**（门禁 80% 未达，方向学反依旧）。lift 0.686→**1.030** 校准到位
+- 解读：慢速下降+过采样修幅值有效；每帧 cube_pose 未修方向。两个嫌疑：①ACT chunk 前瞻性——descend 段的预测 chunk 里混入了抓取后 lift 的未来动作；②弧报告缺口①视觉 grounding 仍主导
+- 处置：门禁拦下，零闭环浪费。`outputs/act-isaac-v4/train_note.md` + BUGLOG OBS-21 已落（commit `1822f2c` 已推）
+
+后续两包（W10 是主攻，W11 顺手）：
+
+### W10 chunk 级 dz 方向分析（区分 anticipation vs grounding）
+
+- 交付：`scripts/chunk_dz_curve.py`（名字可调；只许新建，`openloop_phase.py` 只读参考）
+- 做什么：对 descend 段帧，统计预测 action chunk 内 **dz 方向随 horizon k（0..N）的变化**：k=0 方向一致率多少、随 k 增大如何翻转。判读逻辑：k=0 已向上 → grounding 问题；k 小向下、k 大向上 → anticipation。两份对照：v4 ckpt（`outputs/act-isaac-v4/checkpoints/last/pretrained_model` + `outputs/lerobot-isaac-demos-v4`）与 bal（W7 原命令那对）
+- 口径锚：OBS-13/OBS-21 的 dz 一致率定义；chunk horizon 上限读 ACT config 的 chunk_size，**别硬编码**
+- 验收：两条曲线能明确区分两种假设（或如实报告「分不开」+ 理由）；JSON + md 落 `outputs/qa/`。GPU 现在空闲可用，傍晚后随我要闭环随时归还
+
+### W11 experiments 表加 v4 行 + HANDOVER §4 刷新
+
+- `make_experiment_table.py` 扩展扫 v4（`logs/act-v4-15k.log` + `outputs/act-isaac-v4/train_note.md` + `outputs/qa/compare_v4.json`），重新生成 experiments.csv/md
+- HANDOVER §4 更新为「v4 已采已训、门禁 FAIL 未闭环」，链 OBS-21
+- 验收：生成器重跑幂等；v4 行数字与 train_note/compare_v4.json 一致
+
+*— Kimi · 2026-08-26*
+
+---

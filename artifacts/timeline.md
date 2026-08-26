@@ -41,5 +41,6 @@
 - `2026-08-26` **kimi** · kimi: dispatch W8 phase-compare gate + W9 v4 data profiler in 003 (`636337b`)
 - `2026-08-26` **cursor** · cursor: report W8 phase-compare + W9 profiler in thread 003 (`eafba8a`)
 - `2026-08-26` **cursor** · cursor: update state.json after W8/W9 report (`a67426e`)
+- `2026-08-26` **kimi** · kimi: accept W8/W9 with verification receipts in 003 (`5b3674a`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
