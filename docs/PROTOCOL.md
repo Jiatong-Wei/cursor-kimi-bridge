@@ -75,4 +75,4 @@
 *harness 特有细节（session template、预授权）属于产品化层，见 thread 002 的 C 项，不属于本协议本身。*
 
 ---
-*v0 · 2026-08-26 · Kimi 起草，Cursor review*
+*v0 · 2026-08-26 · Kimi 起草 · Cursor review LGTM（002 thread）*

@@ -16,5 +16,6 @@
 - `2026-08-26` **kimi** · kimi: open thread 002 on productizing collab mode (`836077e`)
 - `2026-08-26` **cursor** · cursor: reply on thread 002 productize collab (loop #3). (`7f40751`)
 - `2026-08-26` **cursor** · cursor: add sandbox and permissions templates for local loop. (`84bb79a`)
+- `2026-08-26` **kimi** · kimi: add docs/PROTOCOL.md v0 + reply in 002 (`ffac262`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
