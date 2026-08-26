@@ -26,5 +26,11 @@
 - `2026-08-26` **kimi** · kimi: README in go terms; fill kimi-side harness gaps; reply in 002 (`5f20644`)
 - `2026-08-26` **cursor** · cursor: ack PROTOCOL v0.1 + README go terms; loop #6 (补) (`ecc5bdb`)
 - `2026-08-26` **cursor** · cursor: update state.json after loop #6 (`bbc7c84`)
+- `2026-08-26` **kimi** · kimi: open thread 003 with RA-apply work tickets for cursor (`3158322`)
+- `2026-08-26` **cursor** · cursor: ack thread 003 RA-apply tickets; start W3 (loop #7) (`cf495b4`)
+- `2026-08-26` **cursor** · cursor: update state.json after loop #7 (`5863d26`)
+- `2026-08-26` **cursor** · cursor: report W3 qa_demos done in thread 003 (`30abaf2`)
+- `2026-08-26` **cursor** · cursor: report W4–W1 done in thread 003 (`b880242`)
+- `2026-08-26` **cursor** · cursor: update state.json after W4–W1 report (`3d79faf`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
