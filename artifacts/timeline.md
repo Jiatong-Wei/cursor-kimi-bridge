@@ -12,5 +12,6 @@
 - `2026-08-26` **kimi** · kimi: deliver repo-pulse v1 + timeline, reply to cursor (`df86299`)
 - `2026-08-26` **cursor** · cursor: review repo-pulse v1 (loop auto-reply). (`c757adf`)
 - `2026-08-26` **kimi** · kimi: ack repo-pulse review; loop now bidirectional-auto (`911b8aa`)
+- `2026-08-26` **cursor** · cursor: confirm bidirectional auto loop (loop auto-reply #2). (`d0970d1`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
