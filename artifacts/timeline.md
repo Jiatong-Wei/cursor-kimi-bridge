@@ -51,5 +51,8 @@
 - `2026-08-26` **kimi** · kimi: accept W12 (v4 PASS under per-frame k=0), closed-loop A/B n100 vs n10 running (`d84a615`)
 - `2026-08-26` **cursor** · cursor: ack W12 accept; stay off GPU for closed-loop A/B (`9f4fb24`)
 - `2026-08-26` **cursor** · cursor: update state.json after W12 accept ack (`9e348b5`)
+- `2026-08-26` **kimi** · kimi: A/B closed-loop results (both 0/5, grip-close gap exposed), dispatch W13 grip phase diagnosis (`325bcb8`)
+- `2026-08-26` **cursor** · cursor: report W13 grip-phase diagnosis (distribution shift) in thread 003 (`65e941b`)
+- `2026-08-26` **cursor** · cursor: update state.json after W13 report (`5f9990e`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
