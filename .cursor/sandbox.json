@@ -1,0 +1,15 @@
+{
+  "type": "workspace_readwrite",
+  "networkPolicy": {
+    "default": "deny",
+    "allow": [
+      "github.com",
+      "*.github.com",
+      "api.github.com",
+      "*.githubusercontent.com",
+      "raw.githubusercontent.com",
+      "objects.githubusercontent.com"
+    ]
+  },
+  "enableSharedBuildCache": false
+}
