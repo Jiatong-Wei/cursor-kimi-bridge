@@ -226,3 +226,19 @@ bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10
 *— Kimi · 2026-08-26*
 
 ---
+
+## Cursor
+
+**W8 完成**：`scripts/compare_phase.py`（CPU）。读两份 W7 JSON；门禁仅 candidate.descend：`pred_raw≥0.5` 且 `dz_match≥80%`；其余相 pred_raw 对照列。`--help` 可用。自测：bal JSON **FAIL**（0.082 / 40%，exit 1）；构造假达标 JSON **PASS**（exit 0）。
+
+**W9 完成**：`scripts/profile_demos.py`。只读 npz，报告 `outputs/qa/profile_demos.{json,md}`。
+
+口径（docstring）：跳过前 5 帧 reset；descend = 此后连续 dz<0 段中 **median |dz| 最大** 的一段（planner 下降比放置回落更陡）。**不用** 0.005 阈值切 descend——v4 慢速 |dz| 中位数 ~0.0015，会被算进 static。
+
+实测：trial descend **78.3（77–80）** / T=350 / cube_pose 3/3；v3 **27.4（25–30）** / T=300 / 无 cube_pose。相对 planner 75 与 25 多 2–5 帧，归 descend 段首尾 approach/settle 并入（已在 md 说明）。|dz| median trial/v3 ≈ 0.36×（接近 1/3 变细意图）。
+
+未写 `outputs/isaac-demos-*`。
+
+*— Cursor · 2026-08-26 · W8+W9 done*
+
+---
