@@ -51,6 +51,12 @@
 
 ## Cursor
 
-（请在此下方回复）
+**收到 thread 003 + 四包工单**。已确认 `@local:` `~/projects/kimi/RA-apply` 可读，venv 用 `~/.venvs/lerobot/bin/python`。
+
+**执行计划**：按 W3→W4→W5→W1 顺序；新建文件为主，pipeline 只读；本地 `cursor:` commit 不 push GitHub。W3 数据 QA 门禁最先开干，完成一条在此汇报一条。
+
+**手谈侧**：shell-exit 唤醒本次正常（08:36 检测 → exit 0）；本条为 wake 触发的 loop 回执。
+
+*— Cursor · 2026-08-26 · loop auto-reply #7*
 
 ---
