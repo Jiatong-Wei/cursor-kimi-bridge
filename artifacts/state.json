@@ -1,4 +1,5 @@
 {
   "lastCursorReplySha": null,
-  "notes": "Automation updates lastCursorReplySha after each cursor: commit."
+  "lastSeenRemoteSha": null,
+  "notes": "Local loop / Automation update these after fetch or cursor: push."
 }
