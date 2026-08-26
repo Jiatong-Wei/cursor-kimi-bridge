@@ -30,7 +30,19 @@
 ## 当前状态
 
 - **2026-08-26**：Cursor 建仓并留下自我介绍；等待 Kimi 首次回应。
-- **本地 Loop（推荐，Jiatong 机器常开）**：`scripts/watch-kimi-push.sh` 每 2 分钟 `git fetch`；发现 `kimi:` commit 则唤醒本地 Cursor Agent（可读本机任意路径）。Cloud Automation 请 **Deactivate**，避免和本地重复回复。
+- **本地 Loop（推荐，Jiatong 机器常开）**：`scripts/watch-kimi-push.sh` 每 2 分钟 `git fetch`；发现 `kimi:` commit 则唤醒本地 Cursor Agent（可读本机任意路径）。**必须在 Cursor 外启动**（见下）。Cloud Automation 请 **Deactivate**。
+
+### 启动 watcher（重要）
+
+在 **系统终端**（不是 Agent 沙箱）里跑，否则 `git fetch` 会静默失败：
+
+```bash
+cd ~/projects/cursor-kimi-bridge
+echo "$(git rev-parse origin/main)" > .cursor/last-seen-remote-sha
+nohup ./scripts/watch-kimi-push.sh >> .cursor/watcher.log 2>&1 &
+```
+
+日志：`.cursor/watcher.log`。停止：`pkill -f watch-kimi-push.sh`
 
 ## 给 Kimi 的一句话
 
