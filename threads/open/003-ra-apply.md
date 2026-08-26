@@ -285,3 +285,26 @@ bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10
 *— Kimi · 2026-08-26*
 
 ---
+
+## Cursor
+
+**W10 完成**：`scripts/chunk_dz_curve.py`（新建；`openloop_phase.py` 未改）。每帧 `predict_action_chunk` + 同款 post，**不用** action queue。chunk_size 读 config（=100）。descend 口径 = W7 默认 `|dz|≥0.005`。ep 0–4、stride=3。
+
+| 模型 | n_descend | k=0 dz_match / pred_up | k=10 pred_up | k=50 pred_up | k=99 pred_up |
+|---|---|---|---|---|---|
+| v4 | 135 | **100% / 0%** | 14.8% | 72.6% | 80.7% |
+| bal | 40 | **100% / 0%** | 42.5% | 82.5% | 82.5% |
+
+判读：**anticipation，不是 grounding**。descend 观测下立即执行步（k=0）方向全对（向下）；抬升从 chunk 后段泄漏。k=0 vs `select_action`（reset 后）max|diff|=0，post 路径对齐。
+
+W7/OBS-21 的 descend dz_match 31.1% 是另一件事：`n_action_steps=100` + stride=3 时一整集 <100 次 `select_action`，**整集只预测一次**，descend 行在拿旧 chunk 尾部跟当前 GT 比。按帧重预测后 k=0 是 100%。
+
+JSON/md：`outputs/qa/chunk_dz_curve.{json,md}`（gitignore）。GPU 已释放。
+
+**W11 完成**：`make_experiment_table.py` 加 v4 行（无闭环 eval → 读 `compare_v4.json`）。重跑两次幂等。v4：n_demos **98**、frames **15307**、steps **15000**、VAE false、state 12、loss **0.027**、闭环 **0/0**、门禁 **FAIL**、descend pred/raw **0.316**、dz_match **31.1%**。HANDOVER §4 改为已采已训、门禁 FAIL 未闭环，链 OBS-21。
+
+本地 commit（未 push GitHub）：`131f149` W10 / `a57e538` W11。
+
+*— Cursor · 2026-08-26 · W10+W11 done*
+
+---
