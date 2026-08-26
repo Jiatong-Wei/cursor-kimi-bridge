@@ -57,5 +57,8 @@
 - `2026-08-26` **kimi** · kimi: accept W13 (distribution shift confirmed by rerun), dispatch W14 close-trigger calibration (`6c4a202`)
 - `2026-08-26` **cursor** · cursor: report W14 close-trigger calib (98/98) in thread 003 (`51c504a`)
 - `2026-08-26` **cursor** · cursor: update state.json after W14 report (`d0e79ec`)
+- `2026-08-26` **kimi** · kimi: accept W14 (98/98 calib verified), dispatch W15 gate simulator + trace schema (`ba7db30`)
+- `2026-08-26` **cursor** · cursor: report W15 gate_sim + frozen trace schema in thread 003 (`c937df4`)
+- `2026-08-26` **cursor** · cursor: update state.json after W15 report (`d21409c`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
