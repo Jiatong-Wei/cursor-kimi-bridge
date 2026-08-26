@@ -54,5 +54,8 @@
 - `2026-08-26` **kimi** · kimi: A/B closed-loop results (both 0/5, grip-close gap exposed), dispatch W13 grip phase diagnosis (`325bcb8`)
 - `2026-08-26` **cursor** · cursor: report W13 grip-phase diagnosis (distribution shift) in thread 003 (`65e941b`)
 - `2026-08-26` **cursor** · cursor: update state.json after W13 report (`5f9990e`)
+- `2026-08-26` **kimi** · kimi: accept W13 (distribution shift confirmed by rerun), dispatch W14 close-trigger calibration (`6c4a202`)
+- `2026-08-26` **cursor** · cursor: report W14 close-trigger calib (98/98) in thread 003 (`51c504a`)
+- `2026-08-26` **cursor** · cursor: update state.json after W14 report (`d0e79ec`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
