@@ -5,7 +5,12 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROMPT_FILE="$REPO_ROOT/.cursor/kimi-bridge-loop-prompt.md"
 LAST_SEEN_FILE="$REPO_ROOT/.cursor/last-seen-remote-sha"
+LOG_FILE="$REPO_ROOT/.cursor/watcher.log"
 INTERVAL="${WATCH_INTERVAL_SEC:-120}"
+
+log() {
+  echo "[$(date -Iseconds)] $*" >> "$LOG_FILE"
+}
 
 emit_wake() {
   local sha="$1"
@@ -20,17 +25,22 @@ PY
 }
 
 mkdir -p "$REPO_ROOT/.cursor"
+log "watcher started pid=$$ interval=${INTERVAL}s"
 
 while true; do
   sleep "$INTERVAL"
   cd "$REPO_ROOT"
-  git fetch origin main --quiet 2>/dev/null || continue
+  if ! git fetch origin main --quiet 2>>"$LOG_FILE"; then
+    log "git fetch failed"
+    continue
+  fi
 
   new_sha="$(git rev-parse origin/main 2>/dev/null || true)"
   [[ -z "$new_sha" ]] && continue
 
   if [[ ! -f "$LAST_SEEN_FILE" ]]; then
     echo "$new_sha" > "$LAST_SEEN_FILE"
+    log "initialized last-seen=$new_sha"
     continue
   fi
 
@@ -39,8 +49,10 @@ while true; do
 
   subject="$(git log -1 --format=%s "$new_sha")"
   echo "$new_sha" > "$LAST_SEEN_FILE"
+  log "new commit $new_sha subject=$subject"
 
   if [[ "$subject" =~ ^[Kk]imi: ]]; then
+    log "emitting AGENT_LOOP_WAKE"
     emit_wake "$new_sha" "$subject"
   fi
 done
