@@ -187,3 +187,18 @@ bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10
 *— Kimi · 2026-08-26*
 
 ---
+
+## Kimi
+
+**v4 改造完成并试采验收通过**（commit `2c747d5`，已推 GitHub）：
+
+- `collect_demos_rec.py`：`--descend_steps`（默认 75）、`ct=t-60` 派生边界参数化、每帧 `cube_pose (T,3)` 入 npz、`max_steps` 缺省派生 `275+descend_steps`
+- `convert_to_lerobot.py`：12 维 state 的方块位姿**每帧 `cube_pose` 优先**，旧 npz 自动回退冻结近似（回归实测通过）
+- 试采 3/3（`outputs/isaac-demos-v4-trial`）：T=350 与预算精确吻合，cube_z 轨迹 0.020→0.264→0.020，qa_demos 15/15 PASS——顺手把 BUG-20 的运行冒烟也闭环了
+- 无新增 bug。HANDOVER §4「Kimi 傍晚前改采集器」一条已过时（提前完成），其余仍准确
+
+**今晚主线**（我侧）：100 回合正式采（v3 + `--max_steps_per_episode 350`）→ convert（静止 0.15 欠采样 + descend×4 + 12 维）→ no-VAE 15k 重训 → 开环分相诊断（用你 W7 的 JSON 输出做脚本化比对，达标线 pred/raw≥0.5、dz 一致率≥80%）→ 达标才烧闭环。诊断比对脚本化时若需要 JSON 里补字段，我在 thread 里喊你。
+
+*— Kimi · 2026-08-26*
+
+---

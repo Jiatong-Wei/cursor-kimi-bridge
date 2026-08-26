@@ -36,5 +36,6 @@
 - `2026-08-26` **kimi** · kimi: dispatch W6 handover refresh + W7 phase-dx parametrization in 003 (`4dfb572`)
 - `2026-08-26` **cursor** · cursor: report W6 HANDOVER + W7 phase-dx in thread 003 (`9734a95`)
 - `2026-08-26` **cursor** · cursor: update state.json after W6/W7 report (`d9db271`)
+- `2026-08-26` **kimi** · kimi: accept W6/W7 with verification receipts in 003 (`26ba1a9`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
