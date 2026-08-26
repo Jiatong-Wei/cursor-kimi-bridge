@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
-# Poll origin/main for new kimi: commits and wake local Cursor via AGENT_LOOP_WAKE sentinel.
+# Single poll: fetch origin/main; on new kimi: commit emit AGENT_LOOP_WAKE and exit 0.
+# Designed for shell-exit wake (see scripts/arm-kimi-watcher.sh).
+#
+# Exit codes:
+#   0 — kimi: commit detected; wake emitted; caller should stop polling
+#   2 — idle (no new commit, or new commit not kimi:, already recorded)
+#   1 — git fetch failed
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROMPT_FILE="$REPO_ROOT/.cursor/kimi-bridge-loop-prompt.md"
 LAST_SEEN_FILE="$REPO_ROOT/.cursor/last-seen-remote-sha"
 LOG_FILE="$REPO_ROOT/.cursor/watcher.log"
-INTERVAL="${WATCH_INTERVAL_SEC:-120}"
 
 log() {
   echo "[$(date -Iseconds)] $*" >> "$LOG_FILE"
@@ -25,34 +30,39 @@ PY
 }
 
 mkdir -p "$REPO_ROOT/.cursor"
-log "watcher started pid=$$ interval=${INTERVAL}s"
+cd "$REPO_ROOT"
 
-while true; do
-  sleep "$INTERVAL"
-  cd "$REPO_ROOT"
-  if ! git fetch origin main --quiet 2>>"$LOG_FILE"; then
-    log "git fetch failed"
-    continue
-  fi
+if ! git fetch origin main --quiet 2>>"$LOG_FILE"; then
+  log "git fetch failed"
+  exit 1
+fi
 
-  new_sha="$(git rev-parse origin/main 2>/dev/null || true)"
-  [[ -z "$new_sha" ]] && continue
+new_sha="$(git rev-parse origin/main 2>/dev/null || true)"
+if [[ -z "$new_sha" ]]; then
+  log "origin/main unresolved after fetch"
+  exit 1
+fi
 
-  if [[ ! -f "$LAST_SEEN_FILE" ]]; then
-    echo "$new_sha" > "$LAST_SEEN_FILE"
-    log "initialized last-seen=$new_sha"
-    continue
-  fi
-
-  last_seen="$(cat "$LAST_SEEN_FILE")"
-  [[ "$new_sha" == "$last_seen" ]] && continue
-
-  subject="$(git log -1 --format=%s "$new_sha")"
+if [[ ! -f "$LAST_SEEN_FILE" ]]; then
   echo "$new_sha" > "$LAST_SEEN_FILE"
-  log "new commit $new_sha subject=$subject"
+  log "initialized last-seen=$new_sha"
+  exit 2
+fi
 
-  if [[ "$subject" =~ ^[Kk]imi: ]]; then
-    log "emitting AGENT_LOOP_WAKE"
-    emit_wake "$new_sha" "$subject"
-  fi
-done
+last_seen="$(cat "$LAST_SEEN_FILE")"
+if [[ "$new_sha" == "$last_seen" ]]; then
+  exit 2
+fi
+
+subject="$(git log -1 --format=%s "$new_sha")"
+echo "$new_sha" > "$LAST_SEEN_FILE"
+log "new commit $new_sha subject=$subject"
+
+if [[ "$subject" =~ ^[Kk]imi: ]]; then
+  log "emitting AGENT_LOOP_WAKE; exiting 0 for harness completion notify"
+  emit_wake "$new_sha" "$subject"
+  exit 0
+fi
+
+log "processed silently (non-kimi prefix)"
+exit 2

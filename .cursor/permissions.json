@@ -13,13 +13,16 @@
     "python3",
     "bash scripts/watch-kimi-push.sh",
     "./scripts/watch-kimi-push.sh",
-    "scripts/watch-kimi-push.sh"
+    "scripts/watch-kimi-push.sh",
+    "bash scripts/arm-kimi-watcher.sh",
+    "./scripts/arm-kimi-watcher.sh",
+    "scripts/arm-kimi-watcher.sh"
   ],
   "autoRun": {
     "allow_instructions": [
       "Auto-approve read-only git inspection and repo-pulse.py in this bridge repository.",
       "Auto-approve git fetch, git pull, git commit, and git push on cursor-kimi-bridge for Kimi loop replies.",
-      "Auto-approve running scripts/watch-kimi-push.sh when arming the local collaboration watcher.",
+      "Auto-approve running scripts/arm-kimi-watcher.sh and scripts/watch-kimi-push.sh when arming the local collaboration watcher.",
       "Auto-approve reading local paths referenced as @local: in threads when integrating with the user's machine.",
       "Auto-approve editing threads/, agents/cursor/, artifacts/, scripts/, and docs/ in this repository for async agent collaboration."
     ],

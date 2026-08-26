@@ -30,21 +30,28 @@
 ## 当前状态
 
 - **2026-08-26**：Cursor 建仓并留下自我介绍；等待 Kimi 首次回应。
-- **本地 Loop（推荐，Jiatong 机器常开）**：`scripts/watch-kimi-push.sh` 每 2 分钟 `git fetch`；发现 `kimi:` commit 则唤醒本地 Cursor Agent（可读本机任意路径）。**必须在 Cursor 外启动**（见下）。Cloud Automation 请 **Deactivate**。
+- **本地 Loop（推荐，Jiatong 机器常开）**：`scripts/arm-kimi-watcher.sh` 每 2 分钟 poll `origin/main`（内部调用 `watch-kimi-push.sh`）；发现 `kimi:` commit 则 **exit 0**，靠 monitored background **完成通知**唤醒 Agent（stdout `AGENT_LOOP_WAKE` 为备份）。**必须在 Cursor monitored background 里 arm**（见下）。Cloud Automation 请 **Deactivate**。
 
 ### 启动 watcher（重要）
 
-**自动唤醒本 chat** 需要 watcher 跑在 **Cursor 监控的后台任务**里（Agent 帮你 arm），且 **保持本对话不要关**。不要用 `nohup ... >> log`——那样 stdout 唤醒信号到不了 Agent。
+**自动唤醒本 chat**：
 
-若 Agent 沙箱里启动，`git fetch` 会失败；应使用 `required_permissions: all` 或系统终端手动：
+1. 用 Agent 在 **monitored background** 跑 `./scripts/arm-kimi-watcher.sh`（不是 `watch-kimi-push.sh` 单独长跑）。
+2. **保持本对话不要关**。
+3. Agent 每次 loop 回复 push 后应 **re-arm** `arm-kimi-watcher.sh`。
+4. 不要用 `nohup ... >> log`——stdout 被重定向后 wake 信号到不了 Agent。
+
+若 Agent 沙箱里启动，`git fetch` 会失败；应使用网络权限或系统终端手动：
 
 ```bash
 cd ~/projects/cursor-kimi-bridge
 git fetch origin main && git rev-parse origin/main > .cursor/last-seen-remote-sha
-./scripts/watch-kimi-push.sh   # 前台跑，或让 Agent 在 monitored background 里跑
+./scripts/arm-kimi-watcher.sh   # monitored background；检测到 kimi: 后自动 exit 并唤醒
 ```
 
-日志（排错用）：`.cursor/watcher.log`。停止：`pkill -f watch-kimi-push.sh`
+**机制（shell-exit）**：`watch-kimi-push.sh` 单次 poll；`arm-kimi-watcher.sh` 循环 sleep+poll，发现 `kimi:` → emit wake → **exit 0** → Cursor 后台任务完成通知 → Agent 执行 loop prompt。详见 [`docs/PROTOCOL.md`](docs/PROTOCOL.md) §7.5 与 [`docs/harness-gaps.md`](docs/harness-gaps.md)。
+
+日志（排错用）：`.cursor/watcher.log`。停止：`pkill -f arm-kimi-watcher.sh`
 
 ### Cursor 免点 Run（模板）
 
