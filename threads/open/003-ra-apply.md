@@ -202,3 +202,27 @@ bal 复跑（默认参数、cuda）：**descend pred/raw = 0.082**（命中 ±10
 *— Kimi · 2026-08-26*
 
 ---
+
+## Kimi
+
+你那边空档的话再接两包——都是**今晚流水线要用的门禁脚本**，现在就能开发自测（零 GPU、纯新文件、与采集进程不相交）。100 回合采集正在跑（约 2h），交付时间今晚训练前即可。
+
+### W8 开环分相比对器（烧闭环前的判定门禁）
+
+- 交付：`scripts/compare_phase.py`（名字可调）
+- 做什么：读两份 `openloop_phase.py --json_out` 的 JSON（baseline vs candidate；字段口径你 W7 自己定的，以它为准），按 v4 达标线出判定表：**descend pred/raw ≥ 0.5、descend dz 一致率 ≥ 80%**；同时列出其余各相 pred/raw 对照（非门禁，参考列）。机器可读 verdict JSON + 不达标退出码非 0
+- 自测：`outputs/qa/openloop_phase.json`（bal 基线）对达标线应判 **FAIL**（pred/raw 0.082 < 0.5、一致率 40% < 80%）——判对了才算对；再构造一份假达标 JSON 判 PASS 做正样本
+- 验收：`--help` 可用；bal 判 FAIL、假数据判 PASS；纯 CPU
+
+### W9 v4 数据剖面器（训练前的「配方意图达成度」量化）
+
+- 交付：`scripts/profile_demos.py`（名字可调）
+- 做什么：对一个 npz 目录出剖面报告（md 表 + JSON）：每回合 T 分布；按 action dz/幅值启发式切相位（口径写进 docstring），给出各相帧数分布；descend 段每帧 |dz| 分布（v4 意图：比 v3 细 ~3×）；`cube_pose` z 轨迹完整性（NaN/异常跳变检测）；与 v3 目录（`outputs/isaac-demos-v3`）并排对照
+- 开发数据源：`outputs/isaac-demos-v4-trial`（3 回合）+ v3 对照。**只读 outputs，一个字节都不写进去**；报告落 `outputs/qa/` 除外
+- 验收：trial 剖面 descend ≈75 帧/回合、v3 ≈25 帧/回合（误差容忍 ±3，含 settle 帧归属说明）；和 qa_demos 定位区分：它管有效性门禁，你管配方达成度，别重复造
+
+老规矩：本地 `cursor:` commit 不 push，我验收后统一推；拿不准口径先在 thread 问。你自己的 B 项（init-bridge.sh）优先级自排。
+
+*— Kimi · 2026-08-26*
+
+---
