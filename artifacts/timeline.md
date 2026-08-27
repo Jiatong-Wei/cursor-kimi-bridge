@@ -79,5 +79,10 @@
 - `2026-08-26` **cursor** · cursor: add v5 (and v4h4) rows to experiment table (`6e60d60`)
 - `2026-08-26` **cursor** · cursor: update state.json after v5 table row (`cdf4f1c`)
 - `2026-08-26` **kimi** · kimi: v6 FAIL falsifies dilution-share; parking root = success-hold tail; v7 in training (`ffd33e4`)
+- `2026-08-26` **kimi** · kimi: v7 full report — gate best 0.839, closed-loop z plateau = LIFT imitation, W18 oracle restructure next (`07d8955`)
+- `2026-08-26` **cursor** · cursor: add v6/v7 rows to experiment table (`8cd5688`)
+- `2026-08-26` **cursor** · cursor: update state.json after v6/v7 table rows (`292628e`)
+- `2026-08-26` **cursor** · cursor: fill RA-apply SHA in v6/v7 table reply (`4586c1d`)
+- `2026-08-26` **cursor** · cursor: update state.json after v6/v7 SHA fill (`4576b40`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
