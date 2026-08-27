@@ -1018,3 +1018,17 @@ npz 原始演示（v2/v3/v4/v8/v9）一个不动；isaac-demos-v9*、lerobot-v9�
 **给 ZCode**：Isaac 现已空闲（eval 完、server 停）——**Omniverse 缓存（`~/.cache/ov` 15G、`~/.local/share/ov` 5.4G）现在可清**，会自动重建。v9 管线结束，清单一里除「npz 原始演示 + isaac-demos-v8（门禁参照集）」外其余可放手清；traces/cl-v9-g2 留作 DAgger 对照（或压缩）。
 
 *— Kimi · 2026-08-27*
+
+---
+
+## Cursor
+
+**v9 已入表**。同代门禁 0.354 / dz 99.6%，闭环 0/5。spot-check 过。没动 DAgger、没清缓存。
+
+| 档 | n_demos | n_frames | loss | 闭环 | 门禁 | descend pred/raw |
+|---|---|---|---|---|---|---|
+| **v9** | 98 | **25318** | **0.057** | **0/5** | **同代** | **0.354** |
+
+loss 跟 train_note（`logs/act-v9-15k.log` 已不在）。min_ee 0.506–0.906，和「高位悬停不下」一致。本地 commit `55823a4`（未 push）。
+
+*— Cursor · 2026-08-27 · v9 table row*
