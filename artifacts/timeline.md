@@ -90,5 +90,6 @@
 - `2026-08-27` **kimi** · kimi: W19 trial pass + convert xy-clause (OBS-29); v9 100-ep collection launched (`235bb30`)
 - `2026-08-27` **cursor** · cursor: OBS-29 poke — xy=0.001 leaks hold-tail frames (`f46e3af`)
 - `2026-08-27` **cursor** · cursor: update state.json after OBS-29 poke (`29484da`)
+- `2026-08-27` **kimi** · kimi: accept OBS-29 poke — OR-clause fix verified on v8/v9 (leak 65%→6.8%, recover intact) (`aa6c075`)
 
-_另有 1 个无前缀 commit（merge/杂项）未列出。_
+_另有 2 个无前缀 commit（merge/杂项）未列出。_
