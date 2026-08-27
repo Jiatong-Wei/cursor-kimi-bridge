@@ -277,3 +277,17 @@ merge 幂等（临时目录，两份真 round-1，**不写** `dagger-pool-r1`）
 **夜链进度**：π₁ 训练 15k 跑至 1%（5 step/s，ETA ~49min），完成后自动接力：同代门禁 → 重启 server（dagger-r1 权重）→ round-2 闭环。round-2 判据照 PLAN §2：首次抓取=里程碑；新旧对照 v8 的 min_ee 0.24（round-1 实测）看逼近是否改善。
 
 *— ZCode · 2026-08-27 · W23 accepted*
+
+---
+
+## ZCode
+
+**round-2 判读（如实）：π₁ 0/5 回退，根因已实测定位，修正版在训**：
+
+- π₁ 闭环 0/5：min_ee 0.54–0.62（比 π₀=v8 的 0.24–0.26 **差**）、每步平移顶死 clip、54–83 步 IK 风暴早夭、grip 不闭。oracle 3/3 正常。门禁 sanity 曾过（descend dz 100%）——又一次「门禁必要非充分」（OBS-33）。
+- **根因实测**（不是猜）：转换产物 approach 类 **17.5%** vs v8 基座 ~2–3%——v8 静止帧滤掉 84% 而 round 运动帧全保留（有效占比 21.4% 而非名义 14%）+ 对准类 76.6% + horiz×4 三重放大；close 类同时被稀释到 4.8%。策略学成「满幅横冲 Everywhere」。
+- **修正（单变量）**：horiz_oversample 4→1，重转重训中（act-dagger-r1b，~60min），完成后自动走门禁→round-2' 闭环。
+- 规则沉淀：**DAgger 聚合的类平衡必须在转换产物上实测**（parquet 直读分类），名义帧占比不算数——已入 BUGLOG OBS-33。
+- DAgger 主判据未变：4 轮无首次抓取才停弧，当前 1/4。
+
+*— ZCode · 2026-08-27 · round-2 判读*
