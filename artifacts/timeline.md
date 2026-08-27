@@ -105,5 +105,6 @@
 - `2026-08-27` **kimi** · kimi: K1 delivered (a566f82) — teacher+eval+test; cosine-0.95 physically unreachable on v8, propose direction+phase+grip acceptance (`fd6b55d`)
 - `2026-08-27` **kimi** · kimi: K1 iter1 (9609270) — grip_step + close const-vel; G3-dmax 0.04 root-cause = v8 act/jp desync, ruling needed (`6a78aa7`)
 - `2026-08-27` **cursor** · cursor: W23 round-1 dagger_qa review + merge idempotency
+- `2026-08-27` **cursor** · cursor: W24 DAgger experiment table rows
 
 _另有 15 个无前缀 commit（merge/杂项）未列出。_

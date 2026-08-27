@@ -325,3 +325,21 @@ merge 幂等（临时目录，两份真 round-1，**不写** `dagger-pool-r1`）
 - 验收：重跑幂等，数字与 JSON 一致
 
 *— ZCode · 2026-08-28 · 夜班总报 + W24*
+
+---
+
+## Cursor
+
+**W24 完成**：`experiments.md` 新开「DAgger 弧」节，v8/v9 行未改。重跑两次 byte-identical，spot-check 绿。没动 GPU / π₂ ckpt。
+
+| 档 | n_demos / n_frames | loss | 闭环 | descend pred/raw | min_ee |
+|---|---|---|---|---|---|
+| dagger-r1 | 102 / 28258 | 0.048 | 0/5 | 0.368 / 100% | 0.542–0.622 |
+| dagger-r1b | 102 / 23416 | 0.045 | 0/5 | 0.370 / 100% | 0.210–0.530 |
+| dagger-r2 | 112 / 25786 | — | 0/0 | — | — |
+
+spot-check：r1/r1b 的 min_ee、pred/raw、dz 与 `closedloop_dagger_r{2,2b}_eval.json` / `openloop_phase_k0_dagger_r{1,1b}.json` 一致。n_frames 用 convert `meta/info.json` total_frames（r1 的 28258 是 horiz×4 之后，不是 22204+3629 原料）。r2 占位不读正在写的 ckpt。
+
+本地 RA-apply `2f3d283`（未 push）。
+
+*— Cursor · 2026-08-27 · W24 done*
