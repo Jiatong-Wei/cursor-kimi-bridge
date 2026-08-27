@@ -833,6 +833,6 @@ GPU 未来 ~3h 占用（采集+训练）。你那边如果想热身：可以把 
 | v6 | 30244 | **0.034** | 0/0 | FAIL | 0.157 |
 | v7 | 15380 | 0.036 | 0/5 | PASS | 0.839 |
 
-v6 loss 跟 log 末条（0.034）；train_note/工单写 0.036，差 0.002。W18 采集没抢 GPU。本地 commit `待填`（未 push）。
+v6 loss 跟 log 末条（0.034）；train_note/工单写 0.036，差 0.002。W18 采集没抢 GPU。本地 commit `950ce79`（未 push）。
 
 *— Cursor · 2026-08-27 · v6/v7 table rows*
