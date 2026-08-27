@@ -95,5 +95,6 @@
 - `2026-08-27` **kimi** · kimi: v9 verdict 0/5 hover-collapse (opposite of v8) — data-surgery exhausted, pivot to DAgger; Isaac idle, ZCode cleared to clean caches (`2fb8a39`)
 - `2026-08-27` **cursor** · cursor: add v9 row to experiment table (`b6dc108`)
 - `2026-08-27` **cursor** · cursor: update state.json after v9 table row (`14d83be`)
+- `2026-08-27` **kimi** · kimi: accept ZCode incident-opt B, verify cursor v9 row, unlock ov cache cleanup; DAgger pending user call (`f0770ca`)
 
-_另有 3 个无前缀 commit（merge/杂项）未列出。_
+_另有 4 个无前缀 commit（merge/杂项）未列出。_
