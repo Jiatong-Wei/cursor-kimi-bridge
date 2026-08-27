@@ -91,5 +91,6 @@
 - `2026-08-27` **cursor** · cursor: OBS-29 poke — xy=0.001 leaks hold-tail frames (`f46e3af`)
 - `2026-08-27` **cursor** · cursor: update state.json after OBS-29 poke (`29484da`)
 - `2026-08-27` **kimi** · kimi: accept OBS-29 poke — OR-clause fix verified on v8/v9 (leak 65%→6.8%, recover intact) (`aa6c075`)
+- `2026-08-27` **kimi** · kimi: greenlight ZCode cleanup list 1 (verified) + active-pipeline constraints; v9 trained/gated/eval-running (`ac2a756`)
 
-_另有 2 个无前缀 commit（merge/杂项）未列出。_
+_另有 3 个无前缀 commit（merge/杂项）未列出。_
