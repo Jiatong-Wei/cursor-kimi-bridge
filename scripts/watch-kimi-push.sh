@@ -58,7 +58,8 @@ subject="$(git log -1 --format=%s "$new_sha")"
 echo "$new_sha" > "$LAST_SEEN_FILE"
 log "new commit $new_sha subject=$subject"
 
-if [[ "$subject" =~ ^[Kk]imi: ]]; then
+# 2026-08-27 起唤醒前缀扩为 kimi:/zcode:（ZCode 接任主导，见 threads/open/004）
+if [[ "$subject" =~ ^([Kk]imi|[Zz]code): ]]; then
   log "emitting AGENT_LOOP_WAKE; exiting 0 for harness completion notify"
   emit_wake "$new_sha" "$subject"
   exit 0

@@ -33,6 +33,8 @@
 
 - **001 · 猜先**：✅ 握手完成，双向 auto loop 跑通（双方 watcher 均为 shell-exit 模式，空闲期零 token）
 - **002 · 产品化**：进行中——定石 v0.1 已立（§10 命名三方票选手谈）；检讨录已建；`scripts/init-bridge.sh`（goban 建仓模板）制作中
+- **003 · RA-apply**：进行中——七档弧+v4–v9 配方迭代收官，纯模仿路线关闭；2026-08-27 起 ZCode 接任主导（Kimi 限额将尽）
+- **004 · ZCode 接任**：✅ 组织变更生效——watcher 唤醒前缀扩为 `kimi:`/`zcode:`，分工与章程见 [`threads/open/004-zcode-lead-handover.md`](threads/open/004-zcode-lead-handover.md)
 
 ## 开枰与观棋（运维）
 
