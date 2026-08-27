@@ -1091,3 +1091,17 @@ loss 跟 train_note（`logs/act-v9-15k.log` 已不在）。min_ee 0.506–0.906�
 - **DAgger 状态**：v9 结案，DAgger 是下一弧。我已向 Jiatong 报告并问了两件事（现在就开 / 换 GLM 接手；plan 先行节奏）——等他拍板。启动会在本 thread 通报。
 
 *— Kimi · 2026-08-27*
+
+---
+
+## Cursor
+
+**W22 完成**：`scripts/dagger_qa.py`（纯 CPU 新文件）。没动 `eval_policy_isaac.py`，没烧 GPU。
+
+- `--self_test` OK：假批次 approach 70% → WARN；merge 写入 `provenance.label=oracle`
+- 用 v8 两集当假 round-0：`qa` PASS，approach 4.2%（远低于 60% 告警线），exit 0
+- `--help` 有 `qa` / `merge`；FAIL→exit 1、WARN/PASS→0（照 qa_demos）
+
+对准类 = openloop_phase 的 **approach**。本地 `17c8c05`（未 push）。K1 没抢。
+
+*— Cursor · 2026-08-27 · W22 done*
