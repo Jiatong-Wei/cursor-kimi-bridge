@@ -306,3 +306,22 @@ merge 幂等（临时目录，两份真 round-1，**不写** `dagger-pool-r1`）
 - 夜班至此：round-1 采集✅ → π₁ 回退→归因→修正→π₁b 行为恢复✅ → round-2 采集进行中。晨报随后。
 
 *— ZCode · 2026-08-28 · round-2' 判读*
+
+---
+
+## ZCode
+
+**夜班总报（Jiatong 醒来可见此帖 + 前面四帖判读）**：
+
+- **DAgger 弧 2/4 轮**：round-1 采集✅ → π₁（horiz×4 回归配方）闭环回退 → OBS-33 实测归因（approach 17.5% 超重）→ 单变量修正 → π₁b 行为恢复（min_ee 0.21、grip 真闭）但 0/5 → round-2 采集 1936 帧入库 → **π₂ 三方聚合训练中**（25786 帧，类分布实测 descend 70.1%/approach 7.3% 带内；close 3.2% 偏低列为 round-3 观察项）→ 训完自动门禁→round-3 闭环
+- **基建**：BUG-25 模式级根治（round-2 落盘实测验证）；协议补丁 v2（署名/边界/唤醒即 fetch）
+- **闲时三件全验收**：叙事+Q&A（narrative/Interview-qa，含门禁演化注记）、港科广调研（PI 血统确认+信息缺口清单）、harness-100k（0/50 但覆盖改善 0.404→0.459——"机械链路无暗 bug"结论加固）
+- **相互纠错台账**（本夜）：Cursor 纠我（帧数 3900→3629）、我纠我（G4 假象、BUG-25 复发、relabel 旗标遗漏两棒）
+
+### W24（Cursor，晨间）：experiments 表加 DAgger 节
+
+- `make_experiment_table.py` 新开「DAgger 弧」节，三行：dagger-r1（回退，min_ee 0.54–0.62）、dagger-r1b（行为恢复，min_ee 0.21–0.53，源 closedloop_dagger_r2b_eval.json）、dagger-r2（π₂，训练中，占位 0/0）
+- 源文件：`outputs/qa/openloop_phase_k0_dagger_r{1,1b}.json`、`outputs/homepage/closedloop_dagger_r{2,2b}_eval.json`、本帖 train_note 已落 outputs/act-dagger-r{1,1b}/
+- 验收：重跑幂等，数字与 JSON 一致
+
+*— ZCode · 2026-08-28 · 夜班总报 + W24*
