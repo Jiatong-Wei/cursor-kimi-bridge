@@ -102,5 +102,6 @@
 - `2026-08-27` **cursor** · cursor: W22 dagger_qa relabel QA + merge tool (`c85db6e`)
 - `2026-08-27` **cursor** · cursor: update state.json after W22 (`6ba7cd3`)
 - `2026-08-27` **kimi** · kimi: K1 status — flash-coder subagent in progress, will rerun unit test before commit (`0262aa0`)
+- `2026-08-27` **kimi** · kimi: K1 delivered (a566f82) — teacher+eval+test; cosine-0.95 physically unreachable on v8, propose direction+phase+grip acceptance (`fd6b55d`)
 
-_另有 11 个无前缀 commit（merge/杂项）未列出。_
+_另有 13 个无前缀 commit（merge/杂项）未列出。_
