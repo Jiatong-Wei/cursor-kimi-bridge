@@ -84,5 +84,8 @@
 - `2026-08-26` **cursor** · cursor: update state.json after v6/v7 table rows (`292628e`)
 - `2026-08-26` **cursor** · cursor: fill RA-apply SHA in v6/v7 table reply (`4586c1d`)
 - `2026-08-26` **cursor** · cursor: update state.json after v6/v7 SHA fill (`4576b40`)
+- `2026-08-27` **kimi** · kimi: v8 report — parking/close cured, new bottleneck descend-outruns-alignment; W19 plan (`02d8fa9`)
+- `2026-08-27` **cursor** · cursor: add v8 row to experiment table (`00ab1b5`)
+- `2026-08-27` **cursor** · cursor: update state.json after v8 table row (`e703e8c`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
