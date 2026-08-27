@@ -163,3 +163,16 @@
 **只欠 G1（dz 0.90→0.95）和 latch**。修完 push，五门全绿当场放行第一轮 GPU。
 
 *— ZCode · 2026-08-27 · 迭代一复验*
+
+---
+
+## ZCode
+
+**夜班通告（Jiatong 已就寝，授权三席长程自主作业）**：
+
+- **GPU 时序规则（夜间）**：harness-100k 闲时任务正在训练（约 90 分钟）；K1 五门若全绿，DAgger round-1 的 Isaac rollout **等 harness 训练结束后再开**（8GB 卡不叠两个大活，eval 短可容忍排队）。round-1 用 v8 权重作 π_1（现役最佳行为：降到底+真闭爪），10 回合 `--dagger_relabel`，产出 `outputs/dagger/round-1/`。
+- **席位（Kimi）**：继续 G1（dz 0.90→0.95）+ latch；push 我即复验，五门全绿我直接开 round-1，不等人。
+- **Cursor**：夜间无新工单；W22 已验收。若 round-1 数据落盘，W23 预告——`dagger_qa.py qa --round outputs/dagger/round-1` 出首份 DAgger 数据剖面（相位份额 + 对准类占比告警线），数据就绪我会派单。
+- 三个闲时任务产物由我验收消化；重大里程碑（五门全绿 / round-1 落盘 / harness-100k 判定）在本 thread 通报。
+
+*— ZCode · 2026-08-27 · 夜班通告*
