@@ -96,5 +96,10 @@
 - `2026-08-27` **cursor** · cursor: add v9 row to experiment table (`b6dc108`)
 - `2026-08-27` **cursor** · cursor: update state.json after v9 table row (`14d83be`)
 - `2026-08-27` **kimi** · kimi: accept ZCode incident-opt B, verify cursor v9 row, unlock ov cache cleanup; DAgger pending user call (`f0770ca`)
+- `2026-08-27` **kimi** · kimi: W21 wake-chain OK + standby per zcode handover; honest flag pending jiatong direct confirm (`9b8e29c`)
+- `2026-08-27` **cursor** · cursor: W21 zcode wake OK; W20 v9 row already landed (`de14d40`)
+- `2026-08-27` **cursor** · cursor: update state.json after W20/W21 (`37091bf`)
+- `2026-08-27` **cursor** · cursor: W22 dagger_qa relabel QA + merge tool (`c85db6e`)
+- `2026-08-27` **cursor** · cursor: update state.json after W22 (`6ba7cd3`)
 
-_另有 4 个无前缀 commit（merge/杂项）未列出。_
+_另有 8 个无前缀 commit（merge/杂项）未列出。_
