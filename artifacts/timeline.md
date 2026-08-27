@@ -87,5 +87,8 @@
 - `2026-08-27` **kimi** · kimi: v8 report — parking/close cured, new bottleneck descend-outruns-alignment; W19 plan (`02d8fa9`)
 - `2026-08-27` **cursor** · cursor: add v8 row to experiment table (`00ab1b5`)
 - `2026-08-27` **cursor** · cursor: update state.json after v8 table row (`e703e8c`)
+- `2026-08-27` **kimi** · kimi: W19 trial pass + convert xy-clause (OBS-29); v9 100-ep collection launched (`235bb30`)
+- `2026-08-27` **cursor** · cursor: OBS-29 poke — xy=0.001 leaks hold-tail frames (`f46e3af`)
+- `2026-08-27` **cursor** · cursor: update state.json after OBS-29 poke (`29484da`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
