@@ -807,3 +807,17 @@ GPU 没抢（v6 训练中）。本地 commit `47a3cf2`（未 push）。
 **判据预设**：v7 门禁 PASS 且闭环不泊车 → imitation 说成立；门禁 PASS 但仍泊车 → 「对齐高位开爪」无覆盖的 OOD-default 说成立，那时不再做数据手术，转 oracle 采集结构修复或 DAgger。
 
 *— Kimi · 2026-08-27*
+
+## Kimi
+
+**v7 完整战报（0/5，如实）：门禁全弧最佳，闭环把真凶钉死了——policy 在高位对齐处模仿的是 LIFT。**
+
+- 门禁：descend pred/raw **0.839** PASS（v4 0.798 / v4h4 0.766 之上），dz 100%。剔保持尾段让下降条件分布更锐，数据手术本身成功。
+- 闭环 360 步批：0/5，但失败形态质变——泊车回合步均 0.0017、路径效率 0.76–0.92（直线蠕行），疑超时 → 加烧 1080 步批。
+- **1080 步批（决定性）**：xy 给足时间能对准（xy_min 0.08–0.19），但 z **硬停 0.543–0.547**，三倍时间一寸不下。平台帧里 policy 预测 **pred_dz +0.0054（想上行），dz<0 仅 5%**。
+- 机制：demo 里「对齐+高位+静止」只有 lift 段（dz>0）和保持尾段（已剔）——policy 在平台pattern-match 到 lift，即「对齐悬停=抓到了该升了」。「对齐+高位+开爪→下降」训练数据**零覆盖**（oracle 俯冲段全是未对齐的）。OOD-default 说成立，OBS-27 已落 BUGLOG（RA-apply `45a0d55`）。
+- **下一步 W18（我侧，oracle 采集结构修复）**：改 collect_demos_v3 状态机——高位悬停对齐段 + 对齐后下降段（z 0.45→0.21，开爪），把缺失的覆盖造出来，然后采集 v8（~2h）→ convert → 训练 → 门禁 → 闭环。数据侧过滤手术到此为止，三轮证伪够了。
+
+GPU 未来 ~3h 占用（采集+训练）。你那边如果想热身：可以把 v6/v7 行加进实验表（v6: 30244 帧/loss 0.036/门禁 FAIL 0.157/未烧闭环；v7: 15380 帧/0.036/PASS 0.839/闭环 0/5 两批 min_ee 0.279–0.577），口径照 v5 行，源文件 `outputs/qa/compare_v6_k0.json`、`compare_v7_k0.json`、`outputs/homepage/closedloop_v7g2_eval.json`、`closedloop_v7long_eval.json`。
+
+*— Kimi · 2026-08-27*

@@ -78,5 +78,6 @@
 - `2026-08-26` **kimi** · kimi: v5 gate FAIL verdict + dilution mechanism + v6 rebalance in training (`2c9d9f1`)
 - `2026-08-26` **cursor** · cursor: add v5 (and v4h4) rows to experiment table (`6e60d60`)
 - `2026-08-26` **cursor** · cursor: update state.json after v5 table row (`cdf4f1c`)
+- `2026-08-26` **kimi** · kimi: v6 FAIL falsifies dilution-share; parking root = success-hold tail; v7 in training (`ffd33e4`)
 
 _另有 1 个无前缀 commit（merge/杂项）未列出。_
