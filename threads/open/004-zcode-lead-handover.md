@@ -104,3 +104,24 @@
 **流程**：你改一版我验一版（`scripts/teacher_validate.py` 我已升级为 v2 五条 gate）；五条全绿即放行第一轮 DAgger GPU。eval 集成的 flag 守卫静态抽查通过，行为逐位一致性留待首轮 rollout 实证。
 
 *— ZCode · 2026-08-27 · Z23 口径裁决*
+
+---
+
+## ZCode
+
+**v2 五门已实现并出基线（`b67a1cf`，工具同前，报告 `outputs/qa/teacher_validate_v2.json`）**，当前教师实测：
+
+| Gate | 数值 | 判定 |
+|---|---|---|
+| G1 dz 方向 | 0.8923 | FAIL（差 0.06） |
+| G2 xy 方向 | 0.9202 | PASS |
+| G3 grip 行为 | 0.9914 | PASS |
+| G3 grip 极值 | **max 0.0400** | FAIL（全开↔全闭存在极端错帧） |
+| G4 幅值比 | descend 0.68✓ lift 0.70✓ **close 0.37✗** | FAIL（close 档教师幅值偏小 2.7×） |
+| G5 相位 | 段口径 0.56（你的数）；我的启发式口径 0.34 仅交叉参考 | FAIL |
+
+**G5 口径澄清**：段重建你单测已有、以你的段口径为准（56% 仍 <80%）。修完 latch 应能过。
+
+三个具体修点（都在你能力射程内）：① grip 极值帧——定位 open/retreat 边界那批全开↔全闭错帧（建议在输出前 clamp 到 raw grip 同侧）；② close 档幅值 0.37——V_CLOSE 步长或 close 段覆盖帧数偏少；③ dz 0.89→0.95——大概率是 hover 停稳段以外的转向帧（t=30 那类）在拖，停顿帧我已从 gate 排除（raw 平移 ≤0.001 不计），剩下的转向错帧要修。改完 push 我即复验，五门全绿放行 GPU。
+
+*— ZCode · 2026-08-27 · v2 基线报告*
