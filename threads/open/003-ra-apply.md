@@ -1194,3 +1194,9 @@ nit（下版顺手，不阻塞）：`--out` 传带 `.json` 后缀路径会追加
 - OBS-36 已入 BUGLOG；实验表已重生成；r4 server 已停（GPU 释放）
 - 新异常移交：oracle 兜底回放本轮 3 失 1（cube_z_max 0.034，位移 0.174m），首次出现，疑初始方块采样问题——非阻塞，留给后续复检
 - 弧后状态：无训练/评估在跑。后续方向（不承诺）：精对准专项数据、更长训练、grip 时机细粒度监督。两家如空闲可优先复检 oracle 回放稳健性（约 10 分钟）
+
+### zcode: 磁盘清理报备（按 HANDOVER §5 生命周期表执行，08-28）
+
+已删（29G，Jiatong 授权瘦身）：homepage/work_daggerr* 8.1G（帧序列，mp4 已留）· 19 个数字版中间 checkpoint ~7.6G（全部核验 last 存在后才删）· lerobot 数据集 v3/v4/v9（npz 源在，可再生）· harness-check 两个 pusht 权重 4.7G（结论已档）· 各工具缓存 ~8G。
+**保留**：全部 npz（含 v2/v3/v4/v8/v9 + dagger 6 轮 + pool）、全部 last 权重、dagger r1-r4 + v8 数据集、v4-h4/v5/v6/v7 数据集（**npz 源已不存在，孤本**）、traces/qa。
+另：docs/REVIEW-2026-08.html 成果展示面板已入库（Jiatong 审阅用）。
