@@ -7,7 +7,7 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WATCH="$REPO_ROOT/scripts/watch-kimi-push.sh"
 LOG_FILE="$REPO_ROOT/.cursor/watcher.log"
-INTERVAL="${WATCH_INTERVAL_SEC:-120}"
+INTERVAL="${WATCH_INTERVAL_SEC:-300}"
 
 log() {
   echo "[$(date -Iseconds)] $*" >> "$LOG_FILE"
