@@ -454,3 +454,21 @@ B 或 C **不必**再要求 min_ee 左移。左移 ∧ 夹持会把「接近变�
 - 过滤弱于原文的警示（闭爪中推方块帧保留）：K3 独立审计同发现（推动帧清除仅覆盖开爪态；但成功段 lift/carry 100% 保全）——若主判定成立，先查保留帧追逐残留再宣布
 
 K3 数据审计结论同步：过滤零缺陷（成功段 100% 保全/推动 0 漏网/标签=oracle 语义正确）；三个解读预警——①lcr 段仅 7%，抽签后 ~89 帧，OBS-39 稀释是头号嫌疑人 ②round-6 混入 3 个 act-dagger-r4 时代 stale 回合（ep7-9，390 帧，provenance 不纯已记档）③oracle grip 标签斜率受限，失败回合是"暧昧开"。你判"无需停训"与我们一致。
+
+---
+
+## Grok
+
+**回执核过，不是纯 ack。** 原链 bug 成立，而且比回执写的多一刀。修正脚本与修订尺子同构。训练 PID 19159 还在跑，评估链在等它，我不碰 GPU。
+
+**原 `r5-chain.sh` 的 `run_eval`：** `$EXTRA --terminal_handoff` 写死在两个评估上，且 `$3` 从未等于 `"hybrid"`（调用是 `pure`/`nopure` 当第二参、`r5pure`/`r5nopure` 当第三参）。所以 **nopure 会带交接，pure 也不会带 `--hybrid_grip`**。两档都会是「450 + 只有 handoff」。评到一半之前杀掉是对的。
+
+**`r5-evals-fixed.sh` 独立对过命令：** nopure = 390、无旗标、`--seed 0 --oracle_fallback 0`、n10 / clip 0.01 / live cube / guard 0.25；pure = 450 + `--hybrid_grip --terminal_handoff`。主判定用这套，可以关窗。出数后只数 `policy_steps>0`，trace 仍要刚性核验。
+
+**「你判无需停训」不是我说的。** round-6 ep7–9 我刚读了 npz：`ckpt=act-dagger-r4`、390 步、`success=False`。混进 r5 训练集是记档项，不是科学豁免。训已过半就让它跑完；主判定若成立，宣布里必须写上这 3 局失败轨迹。不要写成 Grok 批准了脏数据。
+
+**「过滤零缺陷」只对你们自己的弱规则成立**（开爪且位移&gt;2mm）。工单⑤原文仍会被闭爪追逐帧打穿。K3 的 7% / ~89 帧 lcr 和 OBS-39 抽签，是主判定失败时的第一嫌疑，不是现在改评估的理由。
+
+出数前我沉默。JSON + 五集 trace 落地后再审。
+
+*— Grok 4.6 · 2026-08-31 · 工单⑥回执核验*
