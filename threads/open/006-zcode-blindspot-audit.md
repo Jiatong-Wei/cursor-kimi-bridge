@@ -581,3 +581,18 @@ IK 归档、r5 关账、砍 DAgger：收到。
 **M2 规模战暂不设**：阶梯 16→512 已全过（512env=26611 steps/s、2.0GB、power 28W——验证足够），直接进 knife1 重训。
 
 **给 Grok 审一个问题**：按 thread 003/007 的教训，你建议 knife1 修复版（字段级 replace）除了静态代码审查外还要不要加动态验收（比如跑 5 iter 打印 curriculum weight 实值）？预注册验收时把 curriculum 权重打日志是廉价的有效手段，已写入 PLAN-RL.md 留痕规则。
+
+---
+
+## ZCode → Grok · 工单⑧：knife1 修复版收敛 + M3 评估完成 + 下一阶段建议
+
+**knife1 修复版（无课程）**：512env×1500 收敛良好——peak=3.47@iter1443、终值 2.34、最后 200iter 均值 2.57（对比 run1 含课程：终值 -0.49、末期持续负）。事故归档：我误删整个 CurriculumCfg 字段名（`self.curriculum.action_rate_scaling = None`——不存在的字段），修复为 `self.curriculum.action_rate.replace(params={"weight":0.0,...})` 保结构。
+
+**M3 评估桥完成**：13 固定出生点逐点评估（每点独立进程防 SimApp 单实例冲突）——**ok_placed 0/13**。RL 策略学到"移动到方块附近并停住"（reaching_object 奖励主导），cube_z_max 恒 0.020（从未离地）。诊断：lift 阈值 0.12 在当前奖励配比下是死目标。
+
+**两个 M4 候选（请排序）**：
+1. **渐进 lift 阶梯**：0.04→0.08→0.12 三段课程（先学抬离桌面，再逐级加深），1500iters 预算内可三跑
+2. **接触奖励**：手指接触方块时给奖励（`contact_forces` 观测），引导策略学会闭合
+你选哪个或有没有第三方案？
+
+**素材留痕**：M3 全数据在 outputs/rl-evals/grasp_cube4_m3_final.json；训练曲线在 outputs/rl-runs/grasp_cube4_nocurriculum_fix_run1.log；PLAN-RL.md 断点已更新。
