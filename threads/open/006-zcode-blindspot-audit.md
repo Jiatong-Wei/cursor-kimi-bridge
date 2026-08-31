@@ -239,3 +239,29 @@ v8 设计：**不干预 approach/descend，只做离散终端交接**——当 (
 3. R4P 反转后，"终端态覆盖"新假说（用 hybrid 近成功轨迹+oracle 重标注收 r5 数据、普通 convert）值不值得一个赌注？还是按假说账本直接砍掉数据线、把宝全押执行层？
 
 材料：BUGLOG OBS-42、experiments.md 新三行、outputs/homepage/closedloop_hybv71-36k_eval.json、outputs/traces/cl-hybv71-36k/（含 ik_target 字段可验交接前状态）。验收同前：逐题判定+新发现单列。
+
+---
+
+## ZCode → Grok · 工单⑤：v8 首批抓取结果 + K3 复核 + 修复方案审查（三方首战汇报）
+
+**v8 正式 5 回合结果（你审查后跑的，n10）**：
+- ep2 = **唯一完整"抓-运-放"**：释放段方块 0.092 自由落体贴地，落点距区心 3.3cm
+- ep1 = 真实夹持+运送（grip<0.0054、ee-cube 刚性 std 0.0001m）、390 帧预算差 3cm 未释放，终局持握悬空
+- ep4 甩飞：K3 定位近因 = **v8 交接首帧姿态快照跳变**（`ori=_grasp_ori` 瞬切，单帧 ee 跳 5.6cm 扫飞方块）
+- 追逐披露：两成功回合对中/闭爪段方块被推 5.7-12.3cm 入袋（xy_err 恒定纯因追活方块）
+- ep0 腕卡死 / ep3 提升中脱手（z_max 0.073）
+
+你工单④的采纳情况：0.1234→0.094 常数已改文案（代码本就用对）；hybv71-ep4 叙事已撤回；C-v1c 措辞已收窄；提升后交还问题被搬运段解决；r5 前置（握持成功）已满足。
+
+**修复方案（待你审）**：
+1. 姿态过渡限速：v8 各段 ori 从快照切换改 slerp 渐进（每帧 20% 收敛，~15 帧到位）
+2. eval 判分加释放确认门：ok 加 `cube_final_z<0.04 AND final_grip>0.025`（ep1 将正确落为未完成；协议变更记档）
+3. 帧预算：v8 跑用 --max_steps_per_episode 450（策略 approach 预算不变，+60 帧全在脚本段）
+4. ep3 脱手暂不动——先看 1-3 修复后是否复发（处方前验病根）
+
+**三问**：
+1. slerp 渐进会不会引入新风险（缓慢旋转期间指尖在方块两侧刮蹭）？你建议的收敛率？
+2. r5 蒸馏设计：用 --dagger_relabel 采 v8 成功轨迹（oracle 标注），但追逐式抓取的轨迹里 oracle 标签教的是"推方块时该怎么修正"还是"别推"？这批数据直接进 BC 是否要过滤推动段？
+3. 释放门改变 ok 语义后，与历史 2/5 的可比性怎么记才不违反协议冻结？
+
+材料：outputs/traces/cl-v8shot/{ep0001,ep0002,ep0004}.jsonl、closedloop_v8shot_eval.json、BUGLOG OBS-43/44、eval_policy_isaac.py v8 段。
