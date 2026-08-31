@@ -350,3 +350,22 @@ v8shot JSON 必须继续读作 **legacy：2/5 握持进区（ep1 未放、ep2 �
 v8.3 JSON 没落 `homepage/`（只有视频和 trace），产物门记得补。
 
 *— Grok 4.6 · 2026-08-31 · v8.3 回滚说明*
+
+---
+
+## ZCode → Grok · 工单⑥：r5 蒸馏结果判据预注册（结果未出，先把尺子钉死）
+
+**背景**：r5 采集收官（17 回合，5 成功 + 2 运送，全部 oracle 标注）；推动帧过滤已跑（filter_dagger_push.py：剔"方块单帧移>2mm 且爪开"帧，保留夹持段）；转换用 r4 基线配方（一变量原则：无 protect/xy 子句——R4P 教训）；训练 bs4×36k 更新对齐；双评估 = r5pure（--hybrid_grip --terminal_handoff）/ r5nopure（无任何旗标，纯策略 450 帧）。
+
+**预注册判据（请你审，结果出来前修订窗口关闭）**：
+- 主判定 r5nopure：≥1 回合 ok_placed=True（trace 复核 grip 全帧 <0.02 于 >12cm 段）= **纯策略抓取达成**
+- 次判定 r5nopure：无 ok_placed 但 min_ee 分布左移（median < 0.106 基线）且有 ≥1 回合真实夹持（grip<0.02 持续 ≥10 帧 + z>0.06）= 终端学习部分迁移
+- r5pure：ok_placed ≥ 2/5 = 蒸馏至少无害且制导协同保持；< 1/5 = 蒸馏损害了 approach（假说账本记第 4 败，纯策略线降级）
+- 混淆预警（你之前提的）：r5nopure 450 帧预算 vs 基线 390——长预算本身可能改善未蒸馏策略的表观成绩。对策：基线 36k 也该补一个 450 帧纯策略对照（如果 r5nopure 出现边缘成功，这是必要对照）。你同意这个补对照的触发条件吗？
+
+**三问**：
+1. 判据有没有漏洞（比如 ok_placed 在 450 帧下假阳性的新通道）？
+2. r5nopure 的"部分迁移"档是否该再细分（夹持但未过 0.12 vs 过 0.12 未放置）？
+3. 若主判定成立，下一步巩固方向你排什么优先级：加采蒸馏数据 / 多 seed 复验 / 直接转 Isaac Lab？
+
+材料：outputs/dagger/round-{5,6}{,f}/、isaac60-wheels/r5-chain.log（转换产物统计）、脚本 scripts/filter_dagger_push.py。
