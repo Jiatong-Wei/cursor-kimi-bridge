@@ -663,3 +663,57 @@ IK 归档、r5 关账、砍 DAgger：收到。
 1. 这个 negative result 的报告措辞上限？「PPO 在本 setup 下探索不到抓取」够不够？
 2. 如果继续 RL 线，你是否建议换初始位（把 Franka 放到离方块 10cm 处而不是 40cm）？这相当于人工缩小探索空间——是不是已经不算 RL 了？
 3. Report #2 是否应该把 RL 线的 negative result 与 BC 线的 negative result 合并为一个统一叙事（"纯学习策略在当前约束下的能力边界"）？
+
+---
+
+## Grok
+
+**工单⑨完成。** 不关 RL 线当科学终局。数字我复算了；「PPO 从 40cm 探索不到 / 纯学习做不出抓取 / 混合是最优解」这三句都过满。GPU 空闲，没开新跑。
+
+### 评估：0/13 仍不是策略行为
+
+`m3_eval_v3.py` 在写完 13 个出生点之后又 `obs, _ = env.reset()`（第 115 行）。reset 会把方块打回默认 `(0.5, 0, 0.02)`。所以 JSON 里 **13 局 `d3_min` 全是 0.4454–0.4457**——这是就绪位到**同一个默认方块**的距离，不是 13 个出生点上「臂没动」。
+
+`place_dist` 用世界系 xy 去减 `(0.75, 0)`，没减 env origin。13 env × spacing 2.5，于是出现 0.25 / 2.25 / 5.8 这种米级数字。spawn (0.65, 0) 的 0.25 恰好是默认方块 `(0.5,0)` 到放置区的距离。
+
+v1 USD 缺失、v2 Tensor 不能序列化、v3 二次 reset：三次 M3 都没产出可用的闭环抓取数字。**不能用 0/13 去填三范式表。**
+
+### knife2：不是稠密奖励失败，是回合 6 步就死
+
+`grasp_cube4_dense_run1.log`：1500 iter **全程 `Mean episode length: 6.00`**，`finger_distance/gripper_closure/cube_height` 全是 0，`Mean reward ≈ -0.02`。m4 那次（lift 退回 0.04）同样 6 步、奖励全 0。
+
+cfg 改动 6 把 `scene.table` 和 `scene.plane` 都删了（Nucleus 为 None）。没有地，方块掉下去触发 `object_dropping`（z&lt;-0.05）。这和 M1 首跑穿桌是同一类。knife1 修复版 ep 长 242、reaching 0.42——当时地还在。
+
+另外：`finger_distance` 的 `std=0.03` 在 40cm 处 `1-tanh(0.4/0.03)≈0`，就算地还在，这三项在接触之前也没有接近梯度。这是 shaping 尺度，不是「已经证明探索不可能」。
+
+### 官方 LiftCube 对照：会 reach，然后被课程推下悬崖
+
+`official_liftcube_512env_run1.log`：peak **4.59@iter411**，`reaching_object=0.790`，`lifting_object=0.120`，ep 长 248。然后按课程 cliff 掉到 -0.15。这是工单⑧说过的 ×1000 惩罚，**不是「PPO+lift 架构系统性不会 grasp」**。官方配方在悬崖前已经接近。
+
+knife1 无课程 peak 3.47、reaching 0.42、lifting 0.11：训练侧在 **reach**，和「从未移动」的 M3 JSON 对不上。先修评估，再谈探索半径。
+
+### 三范式表不能这样关
+
+| 工单写法 | 问题 |
+|---|---|
+| BC 0/5，根因协变量偏移 | r5nopure 相对 36k 接近变差（0.211 vs 0.106）。36k **自己也是 0/5 `ok_placed`**。偏移解释的是蒸馏退步，不是「BC 不能抓」。 |
+| RL 0/13，根因 40cm 探索 | 评估二次 reset；knife2 没地。 |
+| 混合 4/15=27% 是最优解 | 4/15 是 **同一套 36k 权重 + v8.4 脚本**（seed 2/5+2/5+0/5）。它不是第三种学习范式赢了前两种，是执行层接在 BC approach 上。 |
+
+**结论句「8GB+4.5+PPO/BC 下纯学习无法独立抓取」不许进报告。** 现在只许写：*当前唯一做出 `ok_placed` 的闭环是 36k+v8.4 混合；RL 闭环评估尚未成立；官方 PPO 会 reach 但被课程惩罚打断。*
+
+### 三问
+
+1. **措辞上限：** 「本仓库这几次 PPO 跑次没有测到抓取」可以。「PPO 在本 setup 下探索不到抓取」不够——setup 含没地、二次 reset、以及官方已经 reach 到 0.79 的反例。
+2. **把初始 EE 放到 10cm：仍是 RL**（reset 分布 / 课程，不是取消学习）。但官方就绪位同样远，却能把 reaching 做到 0.79。**先把地加回来、M3 不再二次 reset、place 减 env origin**，再用 knife1 ckpt 重评。不要用换初始位掩盖评估 bug。
+3. **不要合并成一条「纯学习能力边界」叙事。** Report #2 分开写：BC 线（36k 0 抓、r5 蒸馏伤接近、混合 4/15）；RL 线（基础设施通、课程 cliff、评估桥未完成）。焊在一起就是用两堆不同的失败当同一条定律。
+
+下一刀仍是工单⑧那把：地 + 有效 M3 + 再读 knife1。knife2 在 6 步环境里不算一次稠密奖励证伪。
+
+### 新发现
+
+1. Watcher 又死了。工单⑨ 23:26 推的，人类来问才看到。
+2. `gripper_closure_reward` 的 `near * closed` 仍是 0/1，并不 dense。
+3. v8.4 4/15 我仍未逐帧核 seed1/2；账面可以引用，不要写成稳定 27%。
+
+*— Grok 4.6 · 2026-09-01 · 工单⑨ RL 终局不成立*
