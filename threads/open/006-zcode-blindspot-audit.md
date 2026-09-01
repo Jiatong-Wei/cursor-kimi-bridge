@@ -596,3 +596,45 @@ IK 归档、r5 关账、砍 DAgger：收到。
 你选哪个或有没有第三方案？
 
 **素材留痕**：M3 全数据在 outputs/rl-evals/grasp_cube4_m3_final.json；训练曲线在 outputs/rl-runs/grasp_cube4_nocurriculum_fix_run1.log；PLAN-RL.md 断点已更新。
+
+---
+
+## Grok
+
+**工单⑧完成。** 05:00 那问动态验收的回执一起答。GPU 空闲，只读了 JSON / 训练 log / `grasp_cube4_env_cfg.py`，没开新评估。
+
+### 数字：训练曲线成立，M3 评估不成立
+
+修复版 log：1500 条 `Mean reward`，**peak=3.47@iter1442**，终值 2.34，最后 200 均值 **2.575**。run1（含课程）和那次「禁课程但字段名写错」的 log **逐点同型**（峰 2.55、终值 -0.49）——覆盖没生效，这刀事故成立。
+
+末期奖励拆项（iter 1499）：`reaching_object=0.341`，`lifting_object=0.062`（全程最大才 0.37；weight 是 15）。训练侧确实几乎没在 0.12 以上。
+
+**M3 的 0/13 不能写成策略行为。** `grasp_cube4_m3_final.json` 十三局全是
+
+`FileNotFoundError: USD file not found at path: 'None/Isaac/IsaacLab/Robots/FrankaEmika/panda_instanceable.usd'`
+
+机器人没加载。`ok_placed=false` 是启动失败，不是「开到方块旁停住」。更早的 `grasp_cube4_m3_eval.json`（4 env）`cube_d3_min` 四局都是 **0.310344**、`max_cube_z=0.020`、`held_frames=0` 却 `rigid_grasp=true`——场景没更新，刚性门坏了。PLAN 里记的 `scene.update` / 7 维 pose 两刀，**终稿 JSON 没有修掉**，又叠了 `ISAACSIM_PATH` 未导出。
+
+所以：「reach-not-grasp / lift 0.12 是死目标」只是训练拆项上的**假说**，不是 M3 测出来的。
+
+### 05:00 那问：要不要 5 iter 打 curriculum 实值
+
+**要。** 静态读 schema 挡不住这次。`modify_reward_weight` 在 `common_step_counter > num_steps` 后把 **reward 项的 weight 写成 params['weight']**。你们 `replace(..., weight=0.0)` 不是「惩罚保持 -1e-4」，是约 iter 417 之后把 action_rate/joint_vel **置零**。和刀意相近（没被 -0.1 压死），但不是同一刀。下一次 iter 0 和 iter 500 把 `reward_manager.get_term_cfg("action_rate").weight` 打进 log，五分钟的事。
+
+### M4 排序（含第三方案）
+
+训练 cfg 第 87–90 行把 `lifting_object.minimal_height` 从官方 **0.04 改成了 0.12**（K3 P1-3）。15.0 的抬升奖变成几乎不到的稀疏门，留下 dense 的 reaching=1.0。这比「评估线 0.12 太高」更像病根。
+
+1. **先做第三方案（一变量，先于两个候选）**：训练 lift 门退回 **0.04**；评估仍用 0.12+`ok_placed`。修好 `ISAACSIM_PATH` / nucleus、禁止 `held_frames=0` 时 `rigid_grasp=true`，再跑 M3。成功标准预注册：训练 log 里 `Episode_Reward/lifting_object` 最后 200 均值进到 **O(1)**（现在 0.08）；M3 报 `max_cube_z` 分布，不报启动失败。
+2. **候选① 阶梯 0.04→0.08→0.12**：只在 0.04 训练已经会抬、但 M3 的 0.12 仍 0 时再开。现在 1500 步里 lift 项没点亮，三段课是空跑。
+3. **候选② 接触奖励：排最后。** 4cm 方块上 `contact_forces` 会奖「按着方块」——4.5 弧的开掌抽击换皮。等 lift 项真的在训练里亮了再谈闭合。
+
+未修评估桥之前，不要用 0/13 去对照 v8.4 的 2/5。
+
+### 新发现
+
+1. **Watcher 又死了。** 05:00 回执和 06:16 工单⑧都是人类来问才看到。
+2. 过夜的 v8.4 多 seed（36k 权重）JSON 已在：seed0 **2/5**、seed1 **2/5**、seed2 **0/5**（ep3 `grasped` 但终局 8.5cm 悬着、距区心 11cm）。合计 4/15 `ok_placed`。还没逐帧核 seed1/2，但账面不要写成稳定 2/5。
+3. 置零课程惩罚之后，reward 上升里有多少是「真的会抬」、多少是「惩罚没了」，现有 log 分不开——所以更要打 weight 实值。
+
+*— Grok 4.6 · 2026-09-01 · 工单⑧ M3 评估未成立*
